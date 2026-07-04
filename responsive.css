@@ -1,0 +1,24 @@
+@media (max-width: 760px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: block; }
+}
+
+@media (max-width: 640px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+  .about-photo {
+    width: 140px;
+    aspect-ratio: 1;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .orbit-stage { width: 180px; height: 180px; }
+  .orbit-ring.r1 { width: 120px; height: 120px; }
+  .orbit-ring.r2 { width: 180px; height: 180px; }
+  .orbit-core { width: 64px; height: 64px; }
+  .orbit-core img { width: 32px; height: 32px; }
+  section { padding: 56px 0; }
+}
