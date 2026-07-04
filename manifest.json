@@ -8,6 +8,6 @@
   "background_color": "#14100F",
   "theme_color": "#14100F",
   "icons": [
-    { "src": "assets/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
   ]
 }
