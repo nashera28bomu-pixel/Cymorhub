@@ -118,5 +118,17 @@
     "status": "Live",
     "version": "v1.0",
     "url": "https://cymor-all-video-downloader.vercel.app"
+  },
+  {
+    "id": "cymor-tiktok-downloader",
+    "name": "Cymor TikTok Downloader",
+    "icon": "⬇️",
+    "shortDescription": "Download TikTok videos without the watermark, or just the audio.",
+    "description": "Paste any TikTok link to get a clean, watermark-free MP4, or extract the audio as a standalone MP3 — processed server-side, no ads or redirects.",
+    "features": ["Watermark-free video download", "Audio extraction to MP3", "Real-time download progress", "No login required"],
+    "category": "tools",
+    "status": "Live",
+    "version": "v1.0",
+    "url": "https://cymorassistant.onrender.com"
   }
 ]
