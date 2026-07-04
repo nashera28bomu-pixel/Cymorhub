@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>Cymor Hub — Cymor Tech Services</title>
+<meta name="description" content="Cymor Tech Services — every app, bot and service built by Legendary Smiley Cymor, all in one place.">
+<meta name="theme-color" content="#14100F">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/variables.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/cards.css">
+<link rel="stylesheet" href="assets/css/modal.css">
+<link rel="stylesheet" href="assets/css/animations.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+<!-- ================= LOADING SCREEN ================= -->
+<div id="loading-screen">
+  <div class="loader-logo">CYMOR <span>HUB</span></div>
+  <div class="loader-bar-track"><div class="loader-bar-fill" id="loader-bar-fill"></div></div>
+  <div class="loader-status" id="loader-status">Loading...</div>
+</div>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header">
+  <div class="wrap">
+    <a href="#top"><img class="logo-mark" src="assets/images/logo.svg" alt="Cymor Tech Services"></a>
+    <nav class="nav-links">
+      <a href="#top">🏠 Home</a>
+      <a href="#projects">🚀 Projects</a>
+      <a href="#services">💼 Services</a>
+      <a href="#about">👨‍💻 About</a>
+      <a href="#contact">📞 Contact</a>
+    </nav>
+    <a class="nav-cta" data-wa-link href="#" target="_blank" rel="noopener">Chat on WhatsApp</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu">☰</button>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav">
+    <a href="#top">🏠 Home</a>
+    <a href="#projects">🚀 Projects</a>
+    <a href="#services">💼 Services</a>
+    <a href="#about">👨‍💻 About</a>
+    <a href="#contact">📞 Contact</a>
+  </nav>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <canvas id="hero-particles"></canvas>
+  <div class="wrap">
+    <div class="orbit-stage" id="orbit-stage">
+      <div class="orbit-ring r2"></div>
+      <div class="orbit-ring r1"></div>
+      <div class="orbit-core"><img src="assets/icons/icon.svg" alt=""></div>
+    </div>
+    <div>
+      <h1 class="hero-name">Legendary Smiley <span class="accent">Cymor</span></h1>
+      <p class="hero-tagline">Welcome to my world. Development at its best.</p>
+    </div>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="#projects">View Projects</a>
+      <a class="btn-ghost" data-wa-link href="#" target="_blank" rel="noopener">Start a Project</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROJECTS ================= -->
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">🚀 Shipped</div>
+      <h2>A working portfolio, not a mockup gallery</h2>
+      <p>Every project below is live. Tap a card for details.</p>
+    </div>
+    <div class="filter-bar" id="filter-row">
+      <button class="filter-chip active" data-filter="all">All</button>
+      <button class="filter-chip" data-filter="apps">Apps</button>
+      <button class="filter-chip" data-filter="bots">Bots</button>
+      <button class="filter-chip" data-filter="tools">Tools</button>
+      <div class="search-box">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="project-search" placeholder="Search projects...">
+      </div>
+    </div>
+    <div class="projects-grid" id="projects-grid"></div>
+  </div>
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">💼 What we build</div>
+      <h2>Eight ways to reach your customers</h2>
+    </div>
+    <div class="services-grid" id="services-grid"></div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="about-photo"><span>LSC</span></div>
+    <div class="about-copy">
+      <div class="eyebrow">👨‍💻 About</div>
+      <h2 style="margin-bottom:16px;">Legendary Smiley Cymor — Developer</h2>
+      <p>Founder of <strong>Cymor Tech Services</strong>, building every product in this portfolio entirely from a mobile device — no PC, no laptop. Just Node.js, MongoDB Atlas and Render, shipped from wherever the day takes him.</p>
+      <p>What started as a constraint became the studio's edge: everything here is built lean by necessity, fast to load and designed for the reality of mobile-first African users — not adapted from a desktop-first template.</p>
+      <div class="skills-row">
+        <span class="skill-pill">JavaScript</span>
+        <span class="skill-pill">Node.js</span>
+        <span class="skill-pill">Express</span>
+        <span class="skill-pill">MongoDB</span>
+        <span class="skill-pill">Python</span>
+        <span class="skill-pill">HTML/CSS</span>
+        <span class="skill-pill">WhatsApp Bots</span>
+        <span class="skill-pill">Telegram Bots</span>
+      </div>
+      <div class="quote-block">"Built on a phone, shipped to the world — one product at a time."</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXPERIENCE ================= -->
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Journey</div>
+      <h2>How Cymor Hub came to be</h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <h4>Started Learning</h4>
+        <p>Picked up JavaScript and Node.js, entirely from a phone.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>First Website</h4>
+        <p>Shipped the first working site — proof the mobile-only workflow could actually work.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>First Client</h4>
+        <p>Cymor Tech Services took on its first paying project.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Cymor AI</h4>
+        <p>Built a multi-model AI assistant — chat, vision, image generation and web search.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Other Projects</h4>
+        <p>Cymor Tune, Movie Hub, Script Writer, KUCCPS Advisor and more — a growing catalog.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Cymor Hub</h4>
+        <p>Every project, service and way to reach out — brought together in one place.</p>
+      </div>
+      <div class="timeline-item current">
+        <h4>More coming soon</h4>
+        <p>The next build is already in progress.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STATISTICS ================= -->
+<section id="stats">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-value" id="stat-projects" data-target="10">0</div>
+        <div class="stat-label">Projects</div>
+      </div>
+      <div class="stat-item">
+        <div style="display:flex; align-items:baseline; justify-content:center; gap:2px;">
+          <div class="stat-value" data-target="6">0</div><span class="stat-value">+</span>
+        </div>
+        <div class="stat-label">Months Experience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" data-target="100" data-percent="true">0%</div>
+        <div class="stat-label">Passion</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" data-target="infinite">0</div>
+        <div class="stat-label">More Coming Soon</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="contact-section" id="contact">
+  <div class="wrap">
+    <h2>Let's build something.</h2>
+    <p>Have a project in mind? Reach out directly — replies come from the same phone everything here was built on.</p>
+    <div class="contact-ctas">
+      <a class="btn-primary" data-wa-link href="#" target="_blank" rel="noopener">WhatsApp</a>
+      <a class="btn-ghost" data-mailto-link href="#">Email</a>
+    </div>
+    <div class="social-row" id="social-row"></div>
+  </div>
+</section>
+
+<footer>
+  <p>Built with <span class="heart">❤</span> by Legendary Smiley Cymor</p>
+  <p>© 2026 Cymor Hub · Version 1.0</p>
+</footer>
+
+<script src="assets/js/loader.js"></script>
+<script src="assets/js/particles.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/projects.js"></script>
+<script src="assets/js/services.js"></script>
+<script src="assets/js/search.js"></script>
+<script src="assets/js/modal.js"></script>
+<script src="assets/js/animations.js"></script>
+<script src="assets/js/main.js"></script>
+
+<!-- ================= PROJECT MODAL ================= -->
+<div class="modal-overlay" id="project-modal-overlay">
+  <div class="project-modal" id="project-modal"></div>
+</div>
+
+</body>
+</html>
