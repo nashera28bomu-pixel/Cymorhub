@@ -57,7 +57,7 @@
     "category": "apps",
     "status": "Live",
     "version": "v1.0",
-    "url": "https://cymorai.netlify.app"
+    "url": "https://cymor-aii.vercel.app"
   },
   {
     "id": "cymor-tune",
@@ -117,6 +117,6 @@
     "category": "apps",
     "status": "Live",
     "version": "v1.0",
-    "url": "https://cymorallvideodownloader.vercel.app"
+    "url": "https://cymor-all-video-downloader.vercel.app"
   }
 ]
