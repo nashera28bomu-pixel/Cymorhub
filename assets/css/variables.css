@@ -1,0 +1,35 @@
+:root {
+  /* Brand palette — warm near-black studio, amber signal, emerald growth.
+     Grounded in the real subject: one dev, one phone, shipped from Kenya. */
+  --ink: #14100F;
+  --ink-raised: #1E1815;
+  --ink-raised-2: #251E19;
+  --ink-line: #322A24;
+  --paper: #F2ECE3;
+  --text-dim: #A99C8C;
+  --text-dimmer: #756A5D;
+
+  --amber: #E8A33D;
+  --amber-bright: #F2B454;
+  --amber-dim: #8C6A2C;
+  --amber-wash: rgba(232, 163, 61, 0.1);
+
+  --emerald: #1F7A5C;
+  --emerald-bright: #2FAE83;
+  --emerald-wash: rgba(47, 174, 131, 0.12);
+
+  --danger: #C1503D;
+
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "IBM Plex Mono", "Courier New", monospace;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+
+  --shadow-card: 0 12px 30px -14px rgba(0,0,0,0.5);
+  --shadow-pop: 0 30px 70px -20px rgba(0,0,0,0.65);
+
+  --max-width: 1120px;
+}
