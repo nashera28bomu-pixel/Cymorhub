@@ -1,0 +1,13 @@
+{
+  "name": "Cymor Hub",
+  "short_name": "Cymor Hub",
+  "description": "Cymor Tech Services — every app, bot and service, all in one place.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#14100F",
+  "theme_color": "#14100F",
+  "icons": [
+    { "src": "assets/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

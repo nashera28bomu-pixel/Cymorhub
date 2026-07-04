@@ -1,0 +1,10 @@
+[
+  { "icon": "🤖", "name": "WhatsApp Bots", "description": "Order flows, M-Pesa payments and customer support automated on the platform your customers already use daily." },
+  { "icon": "🌐", "name": "Website Development", "description": "Fast, lightweight sites and PWAs — built lean, load quickly, and designed mobile-first from the ground up." },
+  { "icon": "⚙️", "name": "Automation", "description": "Save hours every week — automated workflows, scheduled tasks, and integrations between the tools you already use." },
+  { "icon": "🎨", "name": "Photo Editing", "description": "Clean, professional photo edits and retouching — turned around fast, delivered ready to use." },
+  { "icon": "🎬", "name": "Video Editing", "description": "Reels, promos and edits with pacing that keeps people watching — built for social-first attention spans." },
+  { "icon": "💻", "name": "Custom Software", "description": "From concept to deployed product — admissions platforms, dashboards, anything your business needs built." },
+  { "icon": "🛠️", "name": "Tech Support", "description": "Stuck on a bug, a broken deploy, or a tool that stopped working? Practical help, no jargon." },
+  { "icon": "✨", "name": "Custom Digital Services", "description": "Something that doesn't fit a category above? If it's digital, there's a good chance it can be built." }
+]

@@ -1,0 +1,122 @@
+[
+  {
+    "id": "cymor-speed",
+    "name": "CymorSpeed",
+    "icon": "⚡",
+    "shortDescription": "Test your internet speed instantly.",
+    "description": "A clean, fast internet speed test tool — download, upload and ping, no clutter, no ads, built to load instantly even on a slow connection.",
+    "features": ["Download & upload speed test", "Ping / latency check", "Clean single-page interface", "Works on any device"],
+    "category": "tools",
+    "status": "Live",
+    "version": "v1.0",
+    "url": "https://cymorspeed.onrender.com"
+  },
+  {
+    "id": "cymor-vcf",
+    "name": "Cymor VCF",
+    "icon": "📇",
+    "shortDescription": "Create, join and manage VCF contact sessions.",
+    "description": "A contact-collection platform for events and communities — create a session, share the link, and collect everyone's contact card into one downloadable VCF file.",
+    "features": ["Create & join contact sessions", "Bulk VCF export", "Session management dashboard", "Mobile-first design"],
+    "category": "tools",
+    "status": "Live",
+    "version": "v1.0",
+    "url": "https://cymorvcf.onrender.com"
+  },
+  {
+    "id": "cymor-love-hub",
+    "name": "Cymor Love Hub",
+    "icon": "💌",
+    "shortDescription": "Cinematic love letters for the people you love.",
+    "description": "An AI-powered romantic letter generator — describe your story, and receive a cinematic, typewriter-reveal letter experience to share with your beloved one.",
+    "features": ["AI-generated love letters", "Cinematic typewriter reveal page", "4-model AI fallback chain", "Shareable recipient link"],
+    "category": "apps",
+    "status": "Live",
+    "version": "v1.0",
+    "url": "https://cymorlovehub-ejf3.onrender.com"
+  },
+  {
+    "id": "cymor-football-live",
+    "name": "CymorFootballLive",
+    "icon": "⚽",
+    "shortDescription": "Watch live football matches from around the world.",
+    "description": "A live football streaming hub with HLS playback, a mobile-responsive layout, and coverage across major leagues worldwide.",
+    "features": ["Live match streaming", "HLS.js playback", "Mobile-responsive design", "Multi-league coverage"],
+    "category": "apps",
+    "status": "Live",
+    "version": "v1.0",
+    "url": "https://cymorfootballlive.onrender.com"
+  },
+  {
+    "id": "cymor-ai",
+    "name": "CymorAi",
+    "icon": "🤖",
+    "shortDescription": "Interact with our AI for assistance.",
+    "description": "A multi-model AI assistant — chat, vision, image generation and web search, powered by a blend of Groq, Gemini and HuggingFace models.",
+    "features": ["Multi-model chat", "Vision & image generation", "Web search integration", "Fast, lightweight interface"],
+    "category": "apps",
+    "status": "Live",
+    "version": "v1.0",
+    "url": "https://cymorai.netlify.app"
+  },
+  {
+    "id": "cymor-tune",
+    "name": "Cymor Tune",
+    "icon": "🎵",
+    "shortDescription": "Listen to and download mp3 songs.",
+    "description": "A glassmorphic music streaming PWA — search, stream and download tracks, with offline caching for uninterrupted listening.",
+    "features": ["Stream & download mp3s", "Offline caching (PWA)", "Search across a large catalog", "Karaoke / instrumental filter"],
+    "category": "apps",
+    "status": "Live",
+    "version": "v1.0",
+    "url": "https://cymortune09.vercel.app"
+  },
+  {
+    "id": "rumion-novel-hub",
+    "name": "Rumion Novel Hub",
+    "icon": "📖",
+    "shortDescription": "Read and write your own novels.",
+    "description": "A full-stack novel reading and publishing platform — an author dashboard, a chapter reader, and a full ratings & comments interaction system.",
+    "features": ["Author publishing dashboard", "Chapter-by-chapter reader", "Ratings & comments", "Open Library integration"],
+    "category": "apps",
+    "status": "Live",
+    "version": "v1.0",
+    "url": "https://rumionnovelhub.vercel.app"
+  },
+  {
+    "id": "cymor-script-writer",
+    "name": "Cymor Script Writer",
+    "icon": "🎬",
+    "shortDescription": "Write professional screenplays and export as PDF.",
+    "description": "An offline-first screenplay editor with true industry formatting — scene, character and dialogue autocomplete, automatic (CONT'D), and clean PDF export.",
+    "features": ["Industry-format screenplay editor", "Offline-first (IndexedDB)", "Smart autocomplete & (CONT'D)", "One-tap PDF export"],
+    "category": "tools",
+    "status": "Live",
+    "version": "v1.0",
+    "url": "https://synapse-protocol-steel.vercel.app"
+  },
+  {
+    "id": "cymor-code-learner",
+    "name": "Cymor Code Learner",
+    "icon": "💻",
+    "shortDescription": "Learn coding in interactive lessons.",
+    "description": "A 31-lesson HTML/CSS/JS curriculum built for absolute beginners — deep explanations, checkpoint gating, and progress that syncs across devices.",
+    "features": ["31-lesson beginner curriculum", "Checkpoint-gated progress", "Firebase sync across devices", "Built for total beginners"],
+    "category": "tools",
+    "status": "Live",
+    "version": "v1.0",
+    "url": "https://cymorcodelearner09.vercel.app"
+  },
+  {
+    "id": "cymor-bible-app",
+    "name": "Cymor Bible App",
+    "icon": "📜",
+    "shortDescription": "Read the Word, interact with trivia and more.",
+    "description": "A Bible reading companion with an interactive trivia mode — read scripture, test your knowledge, and grow in faith one verse at a time.",
+    "features": ["Full Bible reader", "Interactive scripture trivia", "Clean, distraction-free layout", "Fast on any connection"],
+    "category": "apps",
+    "status": "Live",
+    "version": "v1.0",
+    "url": "https://cymorallvideodownloader.vercel.app"
+  }
+]
