@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 80">
+  <circle cx="40" cy="40" r="26" fill="none" stroke="#E8A33D" stroke-width="6"
+          stroke-linecap="round" stroke-dasharray="123 41"
+          transform="rotate(-115 40 40)"/>
+  <circle cx="40" cy="40" r="5" fill="#E8A33D"/>
+  <circle cx="61" cy="21" r="4" fill="#2FAE83"/>
+  <text x="82" y="50" font-family="Arial, Helvetica, sans-serif" font-weight="700"
+        font-size="34" letter-spacing="1.5" fill="#F2ECE3">CYMOR</text>
+  <text x="82" y="68" font-family="Arial, Helvetica, sans-serif" font-weight="500"
+        font-size="12" letter-spacing="3" fill="#E8A33D">TECH SERVICES</text>
+</svg>
