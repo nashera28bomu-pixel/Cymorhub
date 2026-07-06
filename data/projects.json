@@ -130,5 +130,17 @@
     "status": "Live",
     "version": "v1.0",
     "url": "https://cymorassistant.onrender.com"
+  },
+  {
+    "id": "cymor-website-builder",
+    "name": "Cymor Website Builder",
+    "icon": "🏗️",
+    "shortDescription": "Describe a website and get it live in under a minute.",
+    "description": "An AI-powered website generator — type a prompt, and get back a fully deployed live site, a GitHub repo with clean source, and a downloadable ZIP, all in one pass.",
+    "features": ["Prompt-to-live-website generation", "Auto GitHub commit & Vercel deploy", "Downloadable ZIP export", "6 template categories, more added over time"],
+    "category": "tools",
+    "status": "Live",
+    "version": "v1.0",
+    "url": "https://cymorwebsitebuilder.onrender.com"
   }
 ]
