@@ -143,4 +143,16 @@
     "version": "v1.0",
     "url": "https://cymorwebsitebuilder.onrender.com"
   }
+  {
+  "id": "cymor-news-hub",
+  "name": "Cymor News Hub",
+  "icon": "📰",
+  "shortDescription": "Kenya and world news, summarized by AI.",
+  "description": "A Kenyan and world news aggregator — headlines pulled from Nation, Standard, Citizen, The Star, Tuko and Capital FM plus global wires, each boiled down to a 3-bullet AI digest with breaking news push alerts.",
+  "features": ["AI-generated 3-bullet digests", "Kenya & world news desks", "Breaking news push notifications", "Installable PWA"],
+  "category": "apps",
+  "status": "Live",
+  "version": "v1.0",
+  "url": "https://cymorludogame.onrender.com"
+  }
 ]
