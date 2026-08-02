@@ -1,24 +1,26 @@
-@media (max-width: 760px) {
-  .nav-links { display: none; }
-  .nav-toggle { display: block; }
+@media(min-width:768px){
+  .nav-links{display:flex;}
+  .nav-cta{display:inline-flex;}
+  .nav-toggle{display:none;}
+  .mobile-nav{display:none;}
+
+  .about-grid{flex-direction:row;text-align:left;align-items:flex-start;gap:56px;}
+  .about-photo{width:160px;height:160px;font-size:36px;flex-shrink:0;}
+
+  .stats-grid{grid-template-columns:repeat(4,1fr);}
+
+  .contact-ctas{flex-wrap:nowrap;}
 }
 
-@media (max-width: 640px) {
-  .about-grid {
-    grid-template-columns: 1fr;
-  }
-  .about-photo {
-    width: 140px;
-    aspect-ratio: 1;
-    margin: 0 auto;
-  }
+@media(min-width:1024px){
+  section{padding:120px 0;}
+  .hero{padding:96px 0 80px;}
+  .orbit-stage{width:260px;height:260px;}
+  .orbit-ring.r1{width:150px;height:150px;}
+  .orbit-ring.r2{width:240px;height:240px;}
 }
 
-@media (max-width: 480px) {
-  .orbit-stage { width: 180px; height: 180px; }
-  .orbit-ring.r1 { width: 120px; height: 120px; }
-  .orbit-ring.r2 { width: 180px; height: 180px; }
-  .orbit-core { width: 64px; height: 64px; }
-  .orbit-core img { width: 32px; height: 32px; }
-  section { padding: 56px 0; }
+@media(max-width:380px){
+  .loader-percent{font-size:44px;}
+  .wrap{padding:0 16px;}
 }
