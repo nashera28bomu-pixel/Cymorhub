@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <title>Cymor Hub — Cymor Tech Services</title>
 <meta name="description" content="Cymor Tech Services — every app, bot and service built by Legendary Smiley Cymor, all in one place.">
-<meta name="theme-color" content="#14100F">
+<meta name="theme-color" content="#0a0907">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,9 +22,11 @@
 
 <!-- ================= LOADING SCREEN ================= -->
 <div id="loading-screen">
-  <div class="loader-logo">CYMOR <span>HUB</span></div>
+  <div class="loader-mark"><img src="icon.svg" alt=""></div>
+  <div class="loader-percent" id="loader-percent">0</div>
   <div class="loader-bar-track"><div class="loader-bar-fill" id="loader-bar-fill"></div></div>
-  <div class="loader-status" id="loader-status">Loading...</div>
+  <div class="loader-logo">CYMOR <span>HUB</span></div>
+  <div class="loader-status" id="loader-status">Booting Cymor OS…</div>
 </div>
 
 <!-- ================= HEADER ================= -->
@@ -32,11 +34,11 @@
   <div class="wrap">
     <a href="#top"><img class="logo-mark" src="logo.svg" alt="Cymor Tech Services"></a>
     <nav class="nav-links">
-      <a href="#top">🏠 Home</a>
-      <a href="#projects">🚀 Projects</a>
-      <a href="#services">💼 Services</a>
-      <a href="#about">👨‍💻 About</a>
-      <a href="#contact">📞 Contact</a>
+      <a href="#top">Home</a>
+      <a href="#projects">Projects</a>
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
     </nav>
     <a class="nav-cta" data-wa-link href="#" target="_blank" rel="noopener">Chat on WhatsApp</a>
     <button class="nav-toggle" id="nav-toggle" aria-label="Menu">☰</button>
@@ -57,7 +59,7 @@
     <div class="orbit-stage" id="orbit-stage">
       <div class="orbit-ring r2"></div>
       <div class="orbit-ring r1"></div>
-      <div class="orbit-core"><img src="icon.svg" alt=""></div>
+      <div class="orbit-core"><img src="icon.svg" alt="Cymor mark"></div>
     </div>
     <div>
       <h1 class="hero-name">Legendary Smiley <span class="accent">Cymor</span></h1>
@@ -67,6 +69,7 @@
       <a class="btn-primary" href="#projects">View Projects</a>
       <a class="btn-ghost" data-wa-link href="#" target="_blank" rel="noopener">Start a Project</a>
     </div>
+    <div class="hero-status"><span class="dot"></span>All systems operational · built entirely on a phone</div>
   </div>
 </section>
 
@@ -208,7 +211,7 @@
 
 <footer>
   <p>Built with <span class="heart">❤</span> by Legendary Smiley Cymor</p>
-  <p>© 2026 Cymor Hub · Version 1.0</p>
+  <p>© 2026 Cymor Hub · Version 2.0</p>
 </footer>
 
 <script src="assets/js/loader.js"></script>
