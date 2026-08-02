@@ -1,75 +1,93 @@
-/* ==========================================================================
-   PROJECT CARDS
-   ========================================================================== */
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-@media (max-width: 900px) { .projects-grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 600px) { .projects-grid { grid-template-columns: 1fr; } }
-
-.project-card {
-  background: var(--ink-raised);
-  border: 1px solid var(--ink-line);
-  border-radius: var(--radius-md);
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  text-align: left;
-  transition: border-color 0.15s, transform 0.15s;
-}
-.project-card:hover { border-color: var(--amber-dim); transform: translateY(-2px); }
-.project-card[data-hidden="true"] { display: none; }
-
-.project-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
-.project-icon { font-size: 22px; }
-.project-card h3 { font-size: 17px; margin-top: 8px; }
-.project-card p.desc { font-size: 13.5px; color: var(--text-dim); flex: 1; }
-
-.tag-row { display: flex; flex-wrap: wrap; gap: 6px; }
-.tech-tag {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  padding: 3px 8px;
-  border-radius: 5px;
-  background: var(--amber-wash);
-  color: var(--amber);
+/* ================= PROJECT GRID ================= */
+.projects-grid{
+  display:grid;grid-template-columns:1fr;gap:18px;
 }
 
-.card-cta {
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  color: var(--emerald-bright);
-  margin-top: 4px;
+.project-card{
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  background:var(--glass);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  overflow:hidden;
+  cursor:pointer;
+  transition:transform .3s var(--ease), border-color .3s var(--ease), box-shadow .3s var(--ease);
+  display:flex;flex-direction:column;
+}
+.project-card:hover, .project-card:active{
+  transform:translateY(-4px);
+  border-color:rgba(232,163,61,.4);
+  box-shadow:0 12px 40px -12px rgba(0,0,0,.6), var(--glow-accent);
 }
 
-.no-results {
-  text-align: center;
-  color: var(--text-dim);
-  padding: 40px 20px;
-  font-size: 14px;
-  grid-column: 1 / -1;
+.project-thumb{
+  width:100%;aspect-ratio:16/9;
+  background:
+    linear-gradient(135deg, rgba(232,163,61,.10), rgba(139,107,255,.10)),
+    var(--bg-elevated-2);
+  position:relative;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+  border-bottom:1px solid var(--line);
 }
+.project-thumb img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .4s var(--ease);}
+.project-card:hover .project-thumb img{transform:scale(1.05);}
+.project-thumb .thumb-fallback{
+  font-size:34px;opacity:.5;
+}
+.project-thumb .status-badge{
+  position:absolute;top:12px;right:12px;
+  font-family:var(--font-mono);font-size:10.5px;
+  padding:5px 10px;border-radius:100px;
+  display:flex;align-items:center;gap:6px;
+  background:rgba(10,9,7,.65);backdrop-filter:blur(6px);
+  border:1px solid var(--line-strong);
+  text-transform:uppercase;letter-spacing:.05em;
+}
+.status-badge.live{color:var(--live);}
+.status-badge.new{color:var(--new);}
+.status-badge .dot{width:5px;height:5px;border-radius:50%;background:currentColor;box-shadow:0 0 6px currentColor;}
 
-/* ==========================================================================
-   SERVICE CARDS
-   ========================================================================== */
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
+.project-body{padding:20px;display:flex;flex-direction:column;gap:10px;flex:1;}
+.project-body h3{font-size:17px;}
+.project-body .desc{color:var(--muted);font-size:13.5px;line-height:1.5;}
+.project-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.project-tags span{
+  font-family:var(--font-mono);font-size:11px;
+  padding:4px 10px;border-radius:100px;
+  background:rgba(232,163,61,.08);color:var(--gold-light);
+  border:1px solid rgba(232,163,61,.16);
 }
-@media (max-width: 860px) { .services-grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 520px) { .services-grid { grid-template-columns: 1fr; } }
+.project-link{
+  margin-top:auto;padding-top:8px;
+  font-size:13px;font-weight:600;color:var(--accent-light);
+  display:inline-flex;align-items:center;gap:6px;
+}
+.project-link svg{transition:transform .2s;}
+.project-card:hover .project-link svg{transform:translateX(3px);}
 
-.service-card {
-  background: var(--ink-raised);
-  border: 1px solid var(--ink-line);
-  border-radius: var(--radius-md);
-  padding: 22px 18px;
+/* ================= SERVICES ================= */
+.services-grid{display:grid;grid-template-columns:1fr;gap:16px;}
+.service-card{
+  border:1px solid var(--line);border-radius:var(--radius-md);
+  background:var(--glass);padding:22px;
+  transition:border-color .3s, transform .3s var(--ease);
 }
-.service-icon { font-size: 24px; margin-bottom: 12px; }
-.service-card h3 { font-size: 16.5px; margin-bottom: 8px; }
-.service-card p { font-size: 13.5px; color: var(--text-dim); line-height: 1.5; }
+.service-card:hover{border-color:rgba(139,107,255,.4);transform:translateY(-3px);}
+.service-icon{
+  width:44px;height:44px;border-radius:12px;
+  background:var(--gold-dim);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;margin-bottom:14px;
+}
+.service-card h3{font-size:15.5px;margin-bottom:6px;}
+.service-card p{color:var(--muted);font-size:13.5px;}
+
+@media(min-width:640px){
+  .projects-grid{grid-template-columns:repeat(2,1fr);}
+  .services-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(min-width:960px){
+  .projects-grid{grid-template-columns:repeat(3,1fr);}
+  .services-grid{grid-template-columns:repeat(4,1fr);}
+}
