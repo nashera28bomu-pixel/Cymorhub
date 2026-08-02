@@ -1,78 +1,76 @@
-/* projects.js — loads data/projects.json (no hardcoding, per the brief)
-   and renders the project grid. Exposes a small shared state object on
-   window so search.js and the filter chips can both drive rendering
-   without needing a module system. */
+/*
+  Pulls from /data/projects.json — no hardcoded project data here anymore.
+  Expected fields per project: id, name, icon, shortDescription, description,
+  features[], category, status, version, url
+  Optional field you can add later: "thumb": "assets/img/projects/your-file.jpg"
+  If a project has a thumb, its screenshot is used. If not, the emoji icon shows instead.
+*/
 
-window.CymorProjects = {
-  all: [],
-  currentFilter: "all",
-  currentQuery: ""
-};
+window.CYMOR_PROJECTS = [];
 
-async function loadProjects() {
-  try {
-    const res = await fetch("data/projects.json");
-    window.CymorProjects.all = await res.json();
-  } catch (err) {
-    console.error("Could not load projects.json — is this running over http(s), not file://?", err);
-    window.CymorProjects.all = [];
-  }
-  renderProjects();
-  renderOrbitStats();
+function buildTags(p){
+  const tags = [];
+  if(p.category) tags.push(p.category.charAt(0).toUpperCase() + p.category.slice(1));
+  if(p.version) tags.push(p.version);
+  return tags;
 }
 
-function renderProjects() {
-  const grid = document.getElementById("projects-grid");
-  if (!grid) return;
-  const { all, currentFilter, currentQuery } = window.CymorProjects;
+function projectCardHTML(p){
+  const statusClass = (p.status || '').toLowerCase();
+  const thumbInner = p.thumb
+    ? `<img src="${p.thumb}" alt="${p.name} screenshot" loading="lazy">`
+    : `<span class="thumb-fallback">${p.icon || '🚀'}</span>`;
+  return `
+    <article class="project-card card-in" data-id="${p.id}" data-category="${p.category}" tabindex="0" role="button" aria-label="View details for ${p.name}">
+      <div class="project-thumb">
+        ${thumbInner}
+        <span class="status-badge ${statusClass}"><span class="dot"></span>${p.status || ''}</span>
+      </div>
+      <div class="project-body">
+        <h3>${p.name}</h3>
+        <p class="desc">${p.shortDescription || ''}</p>
+        <div class="project-tags">${buildTags(p).map(t => `<span>${t}</span>`).join('')}</div>
+        <span class="project-link">View details
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </div>
+    </article>`;
+}
 
-  const query = currentQuery.trim().toLowerCase();
-  const visible = all.filter((p) => {
-    const matchesCategory = currentFilter === "all" || p.category === currentFilter;
-    const matchesQuery =
-      query === "" ||
-      p.name.toLowerCase().includes(query) ||
-      p.shortDescription.toLowerCase().includes(query);
-    return matchesCategory && matchesQuery;
-  });
-
-  grid.innerHTML = "";
-
-  if (visible.length === 0) {
-    grid.innerHTML = `<div class="no-results">No projects match that search yet — more coming soon.</div>`;
+function renderProjects(list){
+  const grid = document.getElementById('projects-grid');
+  if(!grid) return;
+  if(!list.length){
+    grid.innerHTML = `<div class="empty-state">No projects match that search. Try another term.</div>`;
     return;
   }
-
-  visible.forEach((p) => {
-    const card = document.createElement("div");
-    card.className = "project-card fade-in-up";
-    card.innerHTML = `
-      <div class="project-top">
-        <div class="project-icon">${p.icon}</div>
-        <span class="status-badge ${p.url ? "live" : ""}"><span class="dot"></span>${p.status.toUpperCase()}</span>
-      </div>
-      <h3>${p.name}</h3>
-      <p class="desc">${p.shortDescription}</p>
-      <div class="tag-row">${(p.features || []).slice(0, 2).map((f) => `<span class="tech-tag">${f}</span>`).join("")}</div>
-      <span class="card-cta">View details →</span>
-    `;
-    card.addEventListener("click", () => window.openProjectModal(p));
-    grid.appendChild(card);
+  grid.innerHTML = list.map(projectCardHTML).join('');
+  grid.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('click', () => window.openProjectModal(card.dataset.id));
+    card.addEventListener('keydown', e => {
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); window.openProjectModal(card.dataset.id); }
+    });
   });
 }
 
-function renderOrbitStats() {
-  const el = document.getElementById("stat-projects");
-  if (el) el.dataset.target = window.CymorProjects.all.length;
+function loadProjects(){
+  const grid = document.getElementById('projects-grid');
+  if(grid) grid.innerHTML = `<div class="empty-state">Loading projects…</div>`;
+
+  fetch('data/projects.json')
+    .then(res => {
+      if(!res.ok) throw new Error('Failed to load projects.json');
+      return res.json();
+    })
+    .then(data => {
+      window.CYMOR_PROJECTS = data;
+      renderProjects(data);
+      document.dispatchEvent(new CustomEvent('cymor:projects-ready', { detail: data }));
+    })
+    .catch(err => {
+      console.error(err);
+      if(grid) grid.innerHTML = `<div class="empty-state">Couldn't load projects right now. Check data/projects.json.</div>`;
+    });
 }
 
-document.addEventListener("click", (e) => {
-  const chip = e.target.closest(".filter-chip");
-  if (!chip) return;
-  document.querySelectorAll(".filter-chip").forEach((c) => c.classList.remove("active"));
-  chip.classList.add("active");
-  window.CymorProjects.currentFilter = chip.dataset.filter;
-  renderProjects();
-});
-
-document.addEventListener("DOMContentLoaded", loadProjects);
+document.addEventListener('DOMContentLoaded', loadProjects);
