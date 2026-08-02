@@ -1,35 +1,53 @@
-:root {
-  /* Brand palette — warm near-black studio, amber signal, emerald growth.
-     Grounded in the real subject: one dev, one phone, shipped from Kenya. */
-  --ink: #14100F;
-  --ink-raised: #1E1815;
-  --ink-raised-2: #251E19;
-  --ink-line: #322A24;
-  --paper: #F2ECE3;
-  --text-dim: #A99C8C;
-  --text-dimmer: #756A5D;
+:root{
+  /* ===== Core palette ===== */
+  --bg:#0a0907;
+  --bg-elevated:#14100f;
+  --bg-elevated-2:#1b1512;
+  --ink:#f5f1ea;
+  --muted:#9a938a;
+  --muted-dim:#6b655e;
+  --line:rgba(245,241,234,.08);
+  --line-strong:rgba(245,241,234,.16);
+  --glass:rgba(255,255,255,.04);
+  --glass-strong:rgba(255,255,255,.07);
 
-  --amber: #E8A33D;
-  --amber-bright: #F2B454;
-  --amber-dim: #8C6A2C;
-  --amber-wash: rgba(232, 163, 61, 0.1);
+  /* ===== Brand ===== */
+  --gold:#e8a33d;
+  --gold-light:#f4c368;
+  --gold-dim:rgba(232,163,61,.14);
 
-  --emerald: #1F7A5C;
-  --emerald-bright: #2FAE83;
-  --emerald-wash: rgba(47, 174, 131, 0.12);
+  /* ===== Signature accent (used sparingly: loader, particles, hover glow) ===== */
+  --accent:#8b6bff;
+  --accent-light:#b3a0ff;
+  --accent-2:#ff5f9e;
 
-  --danger: #C1503D;
+  /* ===== Status ===== */
+  --live:#4ade80;
+  --new:#38bdf8;
 
-  --font-display: "Space Grotesk", "Inter", sans-serif;
-  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: "IBM Plex Mono", "Courier New", monospace;
+  /* ===== Glow shadows ===== */
+  --glow-gold: 0 0 1px rgba(232,163,61,.6), 0 0 24px rgba(232,163,61,.28);
+  --glow-gold-strong: 0 0 1px rgba(232,163,61,.8), 0 0 40px rgba(232,163,61,.4);
+  --glow-accent: 0 0 1px rgba(139,107,255,.6), 0 0 24px rgba(139,107,255,.3);
+  --glow-accent-strong: 0 0 1px rgba(139,107,255,.8), 0 0 40px rgba(139,107,255,.45);
 
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 22px;
+  /* ===== Type ===== */
+  --font-display:'Space Grotesk', sans-serif;
+  --font-body:'Inter', sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
 
-  --shadow-card: 0 12px 30px -14px rgba(0,0,0,0.5);
-  --shadow-pop: 0 30px 70px -20px rgba(0,0,0,0.65);
+  /* ===== Layout ===== */
+  --wrap:1120px;
+  --radius-sm:10px;
+  --radius-md:16px;
+  --radius-lg:24px;
+  --gap:20px;
 
-  --max-width: 1120px;
+  /* ===== Motion ===== */
+  --ease: cubic-bezier(.22,1,.36,1);
+  --ease-snap: cubic-bezier(.65,0,.35,1);
+}
+
+@media (prefers-color-scheme: light){
+  :root{ /* Cymor Hub is a dark-first brand — intentionally no light theme */ }
 }
