@@ -1,17 +1,43 @@
-/* search.js — live text search across project name + short description.
-   Works together with the category filter chips in projects.js; both
-   read/write the same window.CymorProjects state. */
+(function(){
+  let activeFilter = 'all';
+  let query = '';
 
-document.addEventListener("DOMContentLoaded", () => {
-  const input = document.getElementById("project-search");
-  if (!input) return;
+  function applyFilters(){
+    const source = window.CYMOR_PROJECTS || [];
+    const list = source.filter(p => {
+      const matchesFilter = activeFilter === 'all' || p.category === activeFilter;
+      const q = query.trim().toLowerCase();
+      const matchesQuery = !q ||
+        p.name.toLowerCase().includes(q) ||
+        (p.shortDescription || '').toLowerCase().includes(q) ||
+        (p.description || '').toLowerCase().includes(q) ||
+        (p.category || '').toLowerCase().includes(q);
+      return matchesFilter && matchesQuery;
+    });
+    renderProjects(list);
+  }
 
-  let debounceTimer = null;
-  input.addEventListener("input", () => {
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => {
-      window.CymorProjects.currentQuery = input.value;
-      if (typeof renderProjects === "function") renderProjects();
-    }, 150);
+  document.addEventListener('DOMContentLoaded', () => {
+    const chips = document.querySelectorAll('.filter-chip');
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        activeFilter = chip.dataset.filter;
+        applyFilters();
+      });
+    });
+
+    const search = document.getElementById('project-search');
+    if(search){
+      let debounce;
+      search.addEventListener('input', e => {
+        clearTimeout(debounce);
+        debounce = setTimeout(() => {
+          query = e.target.value;
+          applyFilters();
+        }, 150);
+      });
+    }
   });
-});
+})();
