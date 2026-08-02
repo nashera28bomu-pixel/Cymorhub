@@ -1,40 +1,65 @@
-/* loader.js — the "CYMOR HUB / Loading... / Initializing Projects..."
-   splash screen. Purely cosmetic timing, not tied to real fetch progress,
-   so it always feels snappy even on a slow connection. */
+(function(){
+  const screen = document.getElementById('loading-screen');
+  const fill = document.getElementById('loader-bar-fill');
+  const status = document.getElementById('loader-status');
+  const percentEl = document.getElementById('loader-percent');
+  if(!screen) return;
 
-(function () {
-  const STAGES = [
-    { pct: 20, text: "Loading assets..." },
-    { pct: 45, text: "Initializing Projects..." },
-    { pct: 70, text: "Waking up the bots..." },
-    { pct: 92, text: "Almost there..." },
-    { pct: 100, text: "Welcome." }
+  const steps = [
+    'Booting Cymor OS…',
+    'Mounting assets…',
+    'Compiling styles…',
+    'Waking up the bots…',
+    'Syncing MongoDB Atlas…',
+    'Rendering hub…',
+    'Almost there…'
   ];
 
-  function runLoader() {
-    const screen = document.getElementById("loading-screen");
-    const fill = document.getElementById("loader-bar-fill");
-    const status = document.getElementById("loader-status");
-    if (!screen || !fill || !status) return;
+  let pct = 0;
+  let stepIndex = 0;
+  if(status) status.textContent = steps[0];
 
-    let i = 0;
-    function step() {
-      if (i >= STAGES.length) {
-        setTimeout(() => screen.classList.add("hidden"), 250);
-        return;
-      }
-      const stage = STAGES[i];
-      fill.style.width = stage.pct + "%";
-      status.textContent = stage.text;
-      i++;
-      setTimeout(step, 320);
+  function tick(){
+    // organic, non-linear increment so it doesn't feel like a fake fixed timer
+    const remaining = 100 - pct;
+    const jump = Math.max(1, Math.round(remaining * (0.05 + Math.random() * 0.12)));
+    pct = Math.min(100, pct + jump);
+
+    if(fill) fill.style.width = pct + '%';
+    if(percentEl) percentEl.textContent = pct;
+
+    const nextStep = Math.floor((pct / 100) * (steps.length - 1));
+    if(nextStep !== stepIndex && status){
+      stepIndex = nextStep;
+      status.textContent = steps[stepIndex];
     }
-    step();
+
+    if(pct < 100){
+      setTimeout(tick, 90 + Math.random() * 120);
+    }else{
+      if(status) status.textContent = steps[steps.length - 1];
+      setTimeout(finish, 260);
+    }
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", runLoader);
-  } else {
-    runLoader();
+  function finish(){
+    screen.classList.add('glitching');
+    setTimeout(() => {
+      screen.classList.add('hidden');
+      document.body.classList.remove('lock-scroll');
+      document.dispatchEvent(new CustomEvent('cymor:loaded'));
+    }, 340);
   }
+
+  document.body.classList.add('lock-scroll');
+  // small initial delay so the boot sequence reads as intentional, not instant
+  setTimeout(tick, 220);
+
+  // Safety net: never let the loader trap a real visitor if something stalls
+  setTimeout(() => {
+    if(!screen.classList.contains('hidden')){
+      pct = 100;
+      finish();
+    }
+  }, 6000);
 })();
