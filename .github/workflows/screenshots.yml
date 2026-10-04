@@ -11,8 +11,10 @@ permissions:
 jobs:
   shots:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -27,23 +29,44 @@ jobs:
           node - <<'EOF'
           const { chromium } = require('playwright');
           const fs = require('fs');
+          const sleep = ms => new Promise(r => setTimeout(r, ms));
+          const WAKE = /spinning up|waking up|application loading|free instance|service is starting|allocating compute/i;
+
           (async () => {
-            const projects = JSON.parse(fs.readFileSync('data/projects.json', 'utf8'));
+            const projects = JSON.parse(fs.readFileSync('data/projects.json', 'utf8'))
+              .filter(p => p.url);
             fs.mkdirSync('assets/projects', { recursive: true });
+
+            // 1. Wake every site at the same time
+            await Promise.all(projects.map(p =>
+              fetch(p.url, { signal: AbortSignal.timeout(120000) }).catch(() => {})
+            ));
+
+            // 2. Screenshot each, but only once the real site is showing
             const browser = await chromium.launch();
             const ctx = await browser.newContext({ viewport: { width: 1280, height: 720 } });
+
             for (const p of projects) {
-              if (!p.url) continue;
               const page = await ctx.newPage();
               try {
-                await page.goto(p.url, { waitUntil: 'load', timeout: 90000 });
+                await page.goto(p.url, { waitUntil: 'load', timeout: 120000 });
+                const deadline = Date.now() + 120000;
+                let ready = false;
+                while (Date.now() < deadline) {
+                  const text = await page.evaluate(() => document.body.innerText).catch(() => '');
+                  if (!WAKE.test(text)) { ready = true; break; }
+                  await sleep(5000);
+                  await page.reload({ waitUntil: 'load', timeout: 60000 }).catch(() => {});
+                }
+                if (!ready) { console.log('still waking, kept old image:', p.id); continue; }
                 await page.waitForTimeout(4000);
                 await page.screenshot({ path: `assets/projects/${p.id}.jpg`, type: 'jpeg', quality: 80 });
                 console.log('ok', p.id);
               } catch (e) {
                 console.log('fail', p.id, e.message);
+              } finally {
+                await page.close();
               }
-              await page.close();
             }
             await browser.close();
           })();
