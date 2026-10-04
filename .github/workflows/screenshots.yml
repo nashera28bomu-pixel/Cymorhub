@@ -1,0 +1,59 @@
+name: Update project screenshots
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 3 * * 1"   # every Monday 03:00 UTC
+
+permissions:
+  contents: write
+
+jobs:
+  shots:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Playwright
+        run: |
+          npm i playwright --no-save
+          npx playwright install --with-deps chromium
+
+      - name: Take screenshots
+        run: |
+          node - <<'EOF'
+          const { chromium } = require('playwright');
+          const fs = require('fs');
+          (async () => {
+            const projects = JSON.parse(fs.readFileSync('data/projects.json', 'utf8'));
+            fs.mkdirSync('assets/projects', { recursive: true });
+            const browser = await chromium.launch();
+            const ctx = await browser.newContext({ viewport: { width: 1280, height: 720 } });
+            for (const p of projects) {
+              if (!p.url) continue;
+              const page = await ctx.newPage();
+              try {
+                await page.goto(p.url, { waitUntil: 'load', timeout: 90000 });
+                await page.waitForTimeout(4000);
+                await page.screenshot({ path: `assets/projects/${p.id}.jpg`, type: 'jpeg', quality: 80 });
+                console.log('ok', p.id);
+              } catch (e) {
+                console.log('fail', p.id, e.message);
+              }
+              await page.close();
+            }
+            await browser.close();
+          })();
+          EOF
+
+      - name: Commit screenshots
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/projects
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "Update project screenshots"
+          git push
