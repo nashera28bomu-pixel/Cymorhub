@@ -1,0 +1,30 @@
+[
+  {
+    "name": "JavaScript",
+    "caption": "WEB \u2022 APPS \u2022 BOTS"
+  },
+  {
+    "name": "Node.js",
+    "caption": "BACKEND \u2022 APIs"
+  },
+  {
+    "name": "Express",
+    "caption": "SERVERS \u2022 REST"
+  },
+  {
+    "name": "MongoDB",
+    "caption": "DATA \u2022 ATLAS"
+  },
+  {
+    "name": "Python",
+    "caption": "TOOLS \u2022 SCRIPTING"
+  },
+  {
+    "name": "HTML",
+    "caption": "STRUCTURE"
+  },
+  {
+    "name": "CSS",
+    "caption": "INTERFACES"
+  }
+]

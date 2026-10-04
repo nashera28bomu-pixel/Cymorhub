@@ -9,20 +9,6 @@ function toWhatsAppUrl(localNumber, message){
   return `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
 }
 
-function initMobileNav(){
-  const toggle = document.getElementById('nav-toggle');
-  const mobileNav = document.getElementById('mobile-nav');
-  if(!toggle || !mobileNav) return;
-  toggle.addEventListener('click', () => {
-    mobileNav.classList.toggle('open');
-    toggle.textContent = mobileNav.classList.contains('open') ? '✕' : '☰';
-  });
-  mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    mobileNav.classList.remove('open');
-    toggle.textContent = '☰';
-  }));
-}
-
 function applySocials(data){
   const message = "Hi Cymor, I'd like to talk about a project.";
   const primaryWaUrl = data.whatsapp && data.whatsapp[0]
@@ -66,6 +52,5 @@ function loadSocials(){
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  initMobileNav();
   loadSocials();
 });

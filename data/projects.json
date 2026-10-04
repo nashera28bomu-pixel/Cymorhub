@@ -5,7 +5,12 @@
     "icon": "⚡",
     "shortDescription": "Test your internet speed instantly.",
     "description": "A clean, fast internet speed test tool — download, upload and ping, no clutter, no ads, built to load instantly even on a slow connection.",
-    "features": ["Download & upload speed test", "Ping / latency check", "Clean single-page interface", "Works on any device"],
+    "features": [
+      "Download & upload speed test",
+      "Ping / latency check",
+      "Clean single-page interface",
+      "Works on any device"
+    ],
     "category": "tools",
     "status": "Live",
     "version": "v1.0",
@@ -17,7 +22,12 @@
     "icon": "📇",
     "shortDescription": "Create, join and manage VCF contact sessions.",
     "description": "A contact-collection platform for events and communities — create a session, share the link, and collect everyone's contact card into one downloadable VCF file.",
-    "features": ["Create & join contact sessions", "Bulk VCF export", "Session management dashboard", "Mobile-first design"],
+    "features": [
+      "Create & join contact sessions",
+      "Bulk VCF export",
+      "Session management dashboard",
+      "Mobile-first design"
+    ],
     "category": "tools",
     "status": "Live",
     "version": "v1.0",
@@ -29,11 +39,19 @@
     "icon": "💌",
     "shortDescription": "Cinematic love letters for the people you love.",
     "description": "An AI-powered romantic letter generator — describe your story, and receive a cinematic, typewriter-reveal letter experience to share with your beloved one.",
-    "features": ["AI-generated love letters", "Cinematic typewriter reveal page", "4-model AI fallback chain", "Shareable recipient link"],
+    "features": [
+      "AI-generated love letters",
+      "Cinematic typewriter reveal page",
+      "4-model AI fallback chain",
+      "Shareable recipient link"
+    ],
     "category": "apps",
     "status": "Live",
     "version": "v1.0",
-    "url": "https://cymorlovehub-ejf3.onrender.com"
+    "url": "https://cymorlovehub-ejf3.onrender.com",
+    "tags": [
+      "ai"
+    ]
   },
   {
     "id": "cymor-football-live",
@@ -41,11 +59,19 @@
     "icon": "⚽",
     "shortDescription": "Watch live football matches from around the world.",
     "description": "A live football streaming hub with HLS playback, a mobile-responsive layout, and coverage across major leagues worldwide.",
-    "features": ["Live match streaming", "HLS.js playback", "Mobile-responsive design", "Multi-league coverage"],
+    "features": [
+      "Live match streaming",
+      "HLS.js playback",
+      "Mobile-responsive design",
+      "Multi-league coverage"
+    ],
     "category": "apps",
     "status": "Live",
     "version": "v1.0",
-    "url": "https://cymorfootballlive.onrender.com"
+    "url": "https://cymorfootballlive.onrender.com",
+    "tech": [
+      "HLS.js"
+    ]
   },
   {
     "id": "cymor-ai",
@@ -53,11 +79,25 @@
     "icon": "🤖",
     "shortDescription": "Interact with our AI for assistance.",
     "description": "A multi-model AI assistant — chat, vision, image generation and web search, powered by a blend of Groq, Gemini and HuggingFace models.",
-    "features": ["Multi-model chat", "Vision & image generation", "Web search integration", "Fast, lightweight interface"],
+    "features": [
+      "Multi-model chat",
+      "Vision & image generation",
+      "Web search integration",
+      "Fast, lightweight interface"
+    ],
     "category": "apps",
     "status": "Live",
     "version": "v1.0",
-    "url": "https://cymor-aii.vercel.app"
+    "url": "https://cymor-aii.vercel.app",
+    "featured": true,
+    "tags": [
+      "ai"
+    ],
+    "tech": [
+      "Groq",
+      "Gemini",
+      "HuggingFace"
+    ]
   },
   {
     "id": "cymor-tune",
@@ -65,11 +105,19 @@
     "icon": "🎵",
     "shortDescription": "Listen to and download mp3 songs.",
     "description": "A glassmorphic music streaming PWA — search, stream and download tracks, with offline caching for uninterrupted listening.",
-    "features": ["Stream & download mp3s", "Offline caching (PWA)", "Search across a large catalog", "Karaoke / instrumental filter"],
+    "features": [
+      "Stream & download mp3s",
+      "Offline caching (PWA)",
+      "Search across a large catalog",
+      "Karaoke / instrumental filter"
+    ],
     "category": "apps",
     "status": "Live",
     "version": "v1.0",
-    "url": "https://cymortune09.vercel.app"
+    "url": "https://cymortune09.vercel.app",
+    "tags": [
+      "pwa"
+    ]
   },
   {
     "id": "rumion-novel-hub",
@@ -77,11 +125,19 @@
     "icon": "📖",
     "shortDescription": "Read and write your own novels.",
     "description": "A full-stack novel reading and publishing platform — an author dashboard, a chapter reader, and a full ratings & comments interaction system.",
-    "features": ["Author publishing dashboard", "Chapter-by-chapter reader", "Ratings & comments", "Open Library integration"],
+    "features": [
+      "Author publishing dashboard",
+      "Chapter-by-chapter reader",
+      "Ratings & comments",
+      "Open Library integration"
+    ],
     "category": "apps",
     "status": "Live",
     "version": "v1.0",
-    "url": "https://rumionnovelhub.vercel.app"
+    "url": "https://rumionnovelhub.vercel.app",
+    "tech": [
+      "Open Library"
+    ]
   },
   {
     "id": "cymor-script-writer",
@@ -89,11 +145,19 @@
     "icon": "🎬",
     "shortDescription": "Write professional screenplays and export as PDF.",
     "description": "An offline-first screenplay editor with true industry formatting — scene, character and dialogue autocomplete, automatic (CONT'D), and clean PDF export.",
-    "features": ["Industry-format screenplay editor", "Offline-first (IndexedDB)", "Smart autocomplete & (CONT'D)", "One-tap PDF export"],
+    "features": [
+      "Industry-format screenplay editor",
+      "Offline-first (IndexedDB)",
+      "Smart autocomplete & (CONT'D)",
+      "One-tap PDF export"
+    ],
     "category": "tools",
     "status": "Live",
     "version": "v1.0",
-    "url": "https://synapse-protocol-steel.vercel.app"
+    "url": "https://synapse-protocol-steel.vercel.app",
+    "tech": [
+      "IndexedDB"
+    ]
   },
   {
     "id": "cymor-code-learner",
@@ -101,11 +165,19 @@
     "icon": "💻",
     "shortDescription": "Learn coding in interactive lessons.",
     "description": "A 31-lesson HTML/CSS/JS curriculum built for absolute beginners — deep explanations, checkpoint gating, and progress that syncs across devices.",
-    "features": ["31-lesson beginner curriculum", "Checkpoint-gated progress", "Firebase sync across devices", "Built for total beginners"],
+    "features": [
+      "31-lesson beginner curriculum",
+      "Checkpoint-gated progress",
+      "Firebase sync across devices",
+      "Built for total beginners"
+    ],
     "category": "tools",
     "status": "Live",
     "version": "v1.0",
-    "url": "https://cymorcodelearner09.vercel.app"
+    "url": "https://cymorcodelearner09.vercel.app",
+    "tech": [
+      "Firebase"
+    ]
   },
   {
     "id": "cymor-bible-app",
@@ -113,7 +185,12 @@
     "icon": "📜",
     "shortDescription": "Read the Word, interact with trivia and more.",
     "description": "A Bible reading companion with an interactive trivia mode — read scripture, test your knowledge, and grow in faith one verse at a time.",
-    "features": ["Full Bible reader", "Interactive scripture trivia", "Clean, distraction-free layout", "Fast on any connection"],
+    "features": [
+      "Full Bible reader",
+      "Interactive scripture trivia",
+      "Clean, distraction-free layout",
+      "Fast on any connection"
+    ],
     "category": "apps",
     "status": "Live",
     "version": "v1.0",
@@ -125,7 +202,12 @@
     "icon": "⬇️",
     "shortDescription": "Download TikTok videos without the watermark, or just the audio.",
     "description": "Paste any TikTok link to get a clean, watermark-free MP4, or extract the audio as a standalone MP3 — processed server-side, no ads or redirects.",
-    "features": ["Watermark-free video download", "Audio extraction to MP3", "Real-time download progress", "No login required"],
+    "features": [
+      "Watermark-free video download",
+      "Audio extraction to MP3",
+      "Real-time download progress",
+      "No login required"
+    ],
     "category": "tools",
     "status": "Live",
     "version": "v1.0",
@@ -137,22 +219,45 @@
     "icon": "🏗️",
     "shortDescription": "Describe a website and get it live in under a minute.",
     "description": "An AI-powered website generator — type a prompt, and get back a fully deployed live site, a GitHub repo with clean source, and a downloadable ZIP, all in one pass.",
-    "features": ["Prompt-to-live-website generation", "Auto GitHub commit & Vercel deploy", "Downloadable ZIP export", "6 template categories, more added over time"],
+    "features": [
+      "Prompt-to-live-website generation",
+      "Auto GitHub commit & Vercel deploy",
+      "Downloadable ZIP export",
+      "6 template categories, more added over time"
+    ],
     "category": "tools",
     "status": "Live",
     "version": "v1.0",
-    "url": "https://cymorwebsitebuilder.onrender.com"
+    "url": "https://cymorwebsitebuilder.onrender.com",
+    "featured": true,
+    "tags": [
+      "ai"
+    ],
+    "tech": [
+      "GitHub",
+      "Vercel"
+    ]
   },
   {
-  "id": "cymor-news-hub",
-  "name": "Cymor News Hub",
-  "icon": "📰",
-  "shortDescription": "Kenya and world news, summarized by AI.",
-  "description": "A Kenyan and world news aggregator — headlines pulled from Nation, Standard, Citizen, The Star, Tuko and Capital FM plus global wires, each boiled down to a 3-bullet AI digest with breaking news push alerts.",
-  "features": ["AI-generated 3-bullet digests", "Kenya & world news desks", "Breaking news push notifications", "Installable PWA"],
-  "category": "apps",
-  "status": "Live",
-  "version": "v1.0",
-  "url": "https://cymorludogame.onrender.com"
+    "id": "cymor-news-hub",
+    "name": "Cymor News Hub",
+    "icon": "📰",
+    "shortDescription": "Kenya and world news, summarized by AI.",
+    "description": "A Kenyan and world news aggregator — headlines pulled from Nation, Standard, Citizen, The Star, Tuko and Capital FM plus global wires, each boiled down to a 3-bullet AI digest with breaking news push alerts.",
+    "features": [
+      "AI-generated 3-bullet digests",
+      "Kenya & world news desks",
+      "Breaking news push notifications",
+      "Installable PWA"
+    ],
+    "category": "apps",
+    "status": "Live",
+    "version": "v1.0",
+    "url": "https://cymorludogame.onrender.com",
+    "featured": true,
+    "tags": [
+      "ai",
+      "pwa"
+    ]
   }
 ]

@@ -6,8 +6,9 @@ The single home for every Cymor Tech Services project, service and way to get in
 
 - `index.html` — the whole page shell (loading screen, header, hero, sections)
 - `assets/css/` — `variables` (design tokens) → `style` (layout/sections) → `components` (buttons/chips/timeline/stats) → `cards` (project/service cards) → `modal` → `animations` → `responsive`
-- `assets/js/` — `loader` (splash screen) → `particles` (hero background) → `app` (orbit tabs + mobile nav) → `projects` / `services` (render from JSON) → `search` (project filter) → `modal` (project detail popup) → `animations` (counters + timeline reveal) → `main` (contact links from socials.json)
-- `data/` — `projects.json`, `services.json`, `socials.json`. **Add a new project or service by editing these JSON files only** — no HTML/JS changes needed.
+- `assets/js/` — `core` (CYMOR Core canvas engine) → `intro` (cinematic intro) → `hero` (core + rotating phrase) → `particles` → `app` (socials) → `nav` (floating nav, mobile menu) → `projects` / `services` (render from JSON) → `search` (project filter) → `modal` (project detail) → `lab` → `system` (telemetry) → `palette` (Ctrl/⌘+K) → `animations` → `main`
+- `assets/css/cymor.css` — the v3 theme layer (loads last; glass system, nav, hero, intro, cards).
+- `data/` — `projects.json`, `services.json`, `socials.json`, `stack.json` (orbiting technologies), `lab.json` (Lab + Currently building). **Add a new project or service by editing these JSON files only** — no HTML/JS changes needed.
 
 ## Adding a new project
 
@@ -41,3 +42,11 @@ This site fetches `data/*.json` with `fetch()`, which **will not work if you jus
 - Replace the WhatsApp numbers/email/socials in `data/socials.json` if anything changes
 - Replace `REPLACE-WITH-YOUR-DOMAIN` in `sitemap.xml` with your real domain
 - Swap `assets/images/logo.svg` / `assets/icons/icon.svg` for a raster logo later if you commission one — SVG works fine as-is for web and favicon use
+
+## v3 notes
+
+- **Optional project fields:** `featured` (true → big card), `tags` (`"ai"`, `"pwa"` → filter chips appear automatically), `tech` (chips), `githubUrl` (adds a Source button), `thumb` (e.g. `assets/projects/cymor-ai.webp`). Without `thumb`, a generated preview card is shown.
+- **Lab:** edit `data/lab.json`. `"current": true` puts an entry in *Currently building*. A progress bar only shows if you set `"progress": 0-100` yourself.
+- **Telemetry:** everything is read locally in the browser. The IP/provider lookup runs only on button press via `IP_LOOKUP_URL` in `assets/js/system.js` (third-party service, nothing stored).
+- **Intro:** shown fully once (`localStorage` key `cymor_intro_seen_v1`), ~1s after that, skippable, simplified for reduced-motion.
+- Old loader/header/hero rules remain in `style.css`, `components.css`, `responsive.css` but are no longer used by the markup; they can be pruned.

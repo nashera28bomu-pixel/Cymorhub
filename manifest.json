@@ -1,13 +1,18 @@
 {
-  "name": "Cymor Hub",
-  "short_name": "Cymor Hub",
-  "description": "Cymor Tech Services — every app, bot and service, all in one place.",
+  "name": "CYMOR \u2014 Smiley Cymor",
+  "short_name": "CYMOR",
+  "description": "CYMORTECHSERVICES \u2014 AI, software and automation by Smiley Cymor.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#14100F",
-  "theme_color": "#14100F",
+  "background_color": "#05050b",
+  "theme_color": "#05050b",
   "icons": [
-    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
   ]
 }

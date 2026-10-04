@@ -1,0 +1,25 @@
+[
+  {
+    "id": "cymor-flow",
+    "name": "Cymor Flow",
+    "status": "In development",
+    "current": true,
+    "description": "Business automation platform.",
+    "focus": [
+      "WhatsApp business automation",
+      "Customer engagement",
+      "Business workflow"
+    ],
+    "url": null
+  },
+  {
+    "id": "kuccps-advisor",
+    "name": "Cymor KUCCPS Advisor",
+    "status": "Coming to the hub",
+    "description": "A Kenyan education technology project.",
+    "focus": [
+      "Education technology"
+    ],
+    "url": null
+  }
+]

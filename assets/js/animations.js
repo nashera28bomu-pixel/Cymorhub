@@ -1,6 +1,6 @@
 (function(){
   function initReveals(){
-    const targets = document.querySelectorAll('.section-head, .about-grid, .timeline, .stats-grid, #services-grid, .contact-section');
+    const targets = document.querySelectorAll('.section-head, .about-grid, .timeline, .stats-grid, #services-grid, #lab-grid, #building, .featured-wrap, .contact-section');
     targets.forEach(t => t.classList.add('reveal'));
 
     const io = new IntersectionObserver(entries => {
