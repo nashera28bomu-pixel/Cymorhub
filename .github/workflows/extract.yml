@@ -1,0 +1,34 @@
+name: Extract Cymorhub zip
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "Cymorhub-v3.zip"
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract zip into repo root
+        run: |
+          set -e
+          test -f Cymorhub-v3.zip
+          mkdir /tmp/x
+          unzip -q Cymorhub-v3.zip -d /tmp/x
+          cp -a /tmp/x/Cymorhub-main/. .
+          rm Cymorhub-v3.zip
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet && echo "Nothing to commit" && exit 0
+          git commit -m "Extract Cymorhub v3"
+          git push
