@@ -18,7 +18,8 @@ function buildTags(p){
   return tags;
 }
 function thumbHTML(p){
-  const img = p.thumb ? `<img src="${esc(p.thumb)}" alt="${esc(p.name)} preview" loading="lazy">` : '';
+  const src = p.thumb || `assets/projects/${p.id}.jpg`;
+const img = `<img src="${esc(src)}" alt="${esc(p.name)} preview" loading="lazy">`;
   return `<div class="thumb-art" style="--h:${hue(p.id)}"><span class="ta-icon" aria-hidden="true">${esc(p.icon || '🚀')}</span><b>${esc(p.name)}</b></div>${img}`;
 }
 function badge(p){ return `<span class="status-badge ${esc((p.status || '').toLowerCase())}"><span class="dot"></span>${esc(p.status || '')}</span>`; }
