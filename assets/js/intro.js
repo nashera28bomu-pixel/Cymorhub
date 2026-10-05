@@ -1,22 +1,18 @@
 /*
   Cinematic intro: black → point of light → world forms → technologies orbit →
   world moves aside → CYMORTECHSERVICES types → glitch → flash → homepage.
-  First visit: full sequence. Returning visitors: ~1s transition. Reduced motion: quick fade.
-  Always skippable (button, Escape, or click).
+  Plays on every visit. Reduced motion: quick fade. Always skippable (button, Escape, or click).
 */
 (function(){
   const intro = document.getElementById('intro');
   const body = document.body;
-  const KEY = 'cymor_intro_seen_v1';
   const wait = ms => new Promise(r => setTimeout(r, ms));
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const mobile = matchMedia('(max-width: 767px)').matches;
-  let seen = false; try{ seen = localStorage.getItem(KEY) === '1'; }catch(e){}
   let done = false, skipped = false, core = null;
 
   function release(){
     body.classList.remove('lock-scroll', 'intro-active');
-    try{ localStorage.setItem(KEY, '1'); }catch(e){}
     document.dispatchEvent(new CustomEvent('cymor:loaded'));
   }
   async function finish(fast){
@@ -72,11 +68,6 @@
     });
     core.start();
 
-    if(seen){                                   // returning visitor: short & sweet
-      skip.hidden = true;
-      await tween(core, 'grow', 1, 650); await wait(150);
-      return finish(false);
-    }
     setTimeout(() => { skip.classList.add('show'); }, 900);
 
     await wait(800);                            // Scene 1 — black, then a point of light
@@ -84,8 +75,9 @@
     await tween(core, 'grow', 1, 2200);         // Scene 2 — the world forms
     tween(core, 'sat', 1, 1500);                // Scene 3 — technologies orbit
     await wait(2400);
-    if(mobile){ tween(core, 'oy', -.2, 1800); } else { tween(core, 'ox', -.2, 1800); }
-    await tween(core, 'scale', .85, 1800);      // Scene 4 — the world moves aside
+    core.beat = true;                           // the world keeps glowing
+    if(mobile){ tween(core, 'oy', -.27, 1800); tween(core, 'scale', .62, 1800); } else { tween(core, 'ox', -.23, 1800); tween(core, 'scale', .9, 1800); }
+    await wait(1500);      // Scene 4 — the world moves aside
     await typeBrand();                          // Scene 5 — type CYMORTECHSERVICES
     await wait(350);
     await glitch();                             // Scene 6 — glitch

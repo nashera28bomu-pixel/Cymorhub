@@ -39,20 +39,25 @@
     if(reduced) core.resize();
   }
 
-  /* rotating phrase: type → hold → (backspace | fade) → next */
+  /* rotating headline: natural typing rhythm → hold → fast backspace (or fade) → next */
   function initPhrases(){
     const el = document.getElementById('rot'); if(!el) return;
-    const phrases = ['AI SYSTEMS', 'WEB APPS', 'WHATSAPP BOTS', 'AUTOMATION', 'DIGITAL TOOLS', 'PWAs'];
-    if(reduced){ el.textContent = 'AI SYSTEMS, WEB APPS & BOTS'; return; }
+    const phrases = ['SHIP AI SYSTEMS', 'AUTOMATE BUSINESSES', 'BUILD APPS PEOPLE USE', 'LAUNCH WHATSAPP BOTS', 'TURN IDEAS INTO LIVE PRODUCTS'];
+    if(reduced){ el.textContent = phrases[0]; return; }
     const wait = ms => new Promise(r => setTimeout(r, ms));
     (async function loop(n){
+      await wait(600);
       for(;;){
         const text = phrases[n % phrases.length];
-        for(let i = 1; i <= text.length; i++){ el.textContent = text.slice(0, i); await wait(70 + Math.random() * 45); }
-        await wait(1700);
-        if(n % 2){ for(let i = text.length - 1; i >= 0; i--){ el.textContent = text.slice(0, i); await wait(32); } }
-        else{ el.classList.add('fade'); await wait(380); el.textContent = ''; el.classList.remove('fade'); }
-        await wait(220); n++;
+        for(let i = 1; i <= text.length; i++){
+          el.textContent = text.slice(0, i);
+          const c = text[i - 1];
+          await wait(c === ' ' ? 130 : 55 + Math.random() * 70 + (Math.random() < .06 ? 140 : 0));
+        }
+        await wait(1900);
+        if(n % 2){ for(let i = text.length - 1, d = 55; i >= 0; i--, d = Math.max(14, d - 3)){ el.textContent = text.slice(0, i); await wait(d); } }
+        else{ el.classList.add('fade'); await wait(420); el.textContent = ''; el.classList.remove('fade'); }
+        await wait(280); n++;
       }
     })(0);
   }

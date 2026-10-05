@@ -14,15 +14,20 @@
   const anchors = [...links.querySelectorAll('a')];
   const map = new Map(anchors.map(a => [a.getAttribute('href').slice(1), a]));
   let current = anchors[0];
-  function setActive(id){
+  let setActive = function(id){
     const a = map.get(id); if(!a) return;
     current = a; anchors.forEach(x => { x.classList.toggle('active', x === a); x === a ? x.setAttribute('aria-current', 'true') : x.removeAttribute('aria-current'); });
     moveIndicator(a);
-  }
+  };
   const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) setActive(e.target.id); }), {rootMargin:'-45% 0px -50% 0px'});
+  map.set('system', map.get('contact'));
   map.forEach((_, id) => { const s = document.getElementById(id); if(s) io.observe(s); });
   addEventListener('resize', () => moveIndicator(current), {passive:true});
   document.fonts && document.fonts.ready.then(() => moveIndicator(current));
+  const tabs = [...document.querySelectorAll('.tabbar a')];
+  const _set = setActive;
+  setActive = function(id){ _set(id); const alias = id === 'process' ? 'services' : id === 'system' ? 'contact' : id;
+    tabs.forEach(t => { const on = t.getAttribute('href') === '#' + alias; t.classList.toggle('active', on); on ? t.setAttribute('aria-current', 'true') : t.removeAttribute('aria-current'); }); };
   setActive('top');
 
   function setMenu(open){

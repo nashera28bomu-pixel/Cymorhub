@@ -1,10 +1,82 @@
 [
-  { "icon": "🤖", "name": "WhatsApp Bots", "description": "Order flows, M-Pesa payments and customer support automated on the platform your customers already use daily." },
-  { "icon": "🌐", "name": "Website Development", "description": "Fast, lightweight sites and PWAs — built lean, load quickly, and designed mobile-first from the ground up." },
-  { "icon": "⚙️", "name": "Automation", "description": "Save hours every week — automated workflows, scheduled tasks, and integrations between the tools you already use." },
-  { "icon": "🎨", "name": "Photo Editing", "description": "Clean, professional photo edits and retouching — turned around fast, delivered ready to use." },
-  { "icon": "🎬", "name": "Video Editing", "description": "Reels, promos and edits with pacing that keeps people watching — built for social-first attention spans." },
-  { "icon": "💻", "name": "Custom Software", "description": "From concept to deployed product — admissions platforms, dashboards, anything your business needs built." },
-  { "icon": "🛠️", "name": "Tech Support", "description": "Stuck on a bug, a broken deploy, or a tool that stopped working? Practical help, no jargon." },
-  { "icon": "✨", "name": "Custom Digital Services", "description": "Something that doesn't fit a category above? If it's digital, there's a good chance it can be built." }
+  {
+    "icon": "🤖",
+    "name": "WhatsApp Bots",
+    "description": "Order flows, M-Pesa payments and customer support automated on the platform your customers already use daily.",
+    "points": [
+      "Order flows & M-Pesa payments",
+      "Customer support on autopilot",
+      "Runs where your customers already are"
+    ]
+  },
+  {
+    "icon": "🌐",
+    "name": "Website Development",
+    "description": "Fast, lightweight sites and PWAs — built lean, load quickly, and designed mobile-first from the ground up.",
+    "points": [
+      "Fast, lightweight, mobile-first",
+      "Installable PWAs",
+      "Clean design that converts"
+    ]
+  },
+  {
+    "icon": "⚙️",
+    "name": "Automation",
+    "description": "Save hours every week — automated workflows, scheduled tasks, and integrations between the tools you already use.",
+    "points": [
+      "Scheduled tasks & workflows",
+      "Integrations between your tools",
+      "Hours saved every week"
+    ]
+  },
+  {
+    "icon": "🎨",
+    "name": "Photo Editing",
+    "description": "Clean, professional photo edits and retouching — turned around fast, delivered ready to use.",
+    "points": [
+      "Professional retouching",
+      "Fast turnaround",
+      "Delivered ready to use"
+    ]
+  },
+  {
+    "icon": "🎬",
+    "name": "Video Editing",
+    "description": "Reels, promos and edits with pacing that keeps people watching — built for social-first attention spans.",
+    "points": [
+      "Reels, promos & social edits",
+      "Pacing that keeps people watching",
+      "Built for short attention spans"
+    ]
+  },
+  {
+    "icon": "💻",
+    "name": "Custom Software",
+    "description": "From concept to deployed product — admissions platforms, dashboards, anything your business needs built.",
+    "points": [
+      "Concept to deployed product",
+      "Dashboards & admissions platforms",
+      "Built around your business"
+    ]
+  },
+  {
+    "icon": "🛠️",
+    "name": "Tech Support",
+    "description": "Stuck on a bug, a broken deploy, or a tool that stopped working? Practical help, no jargon.",
+    "points": [
+      "Bugs & broken deploys fixed",
+      "Tools that stopped working",
+      "Practical help, no jargon"
+    ]
+  },
+  {
+    "icon": "✨",
+    "name": "Custom Digital Services",
+    "description": "Something that doesn't fit a category above? If it's digital, there's a good chance it can be built.",
+    "points": [
+      "If it's digital, it can be built",
+      "Tell me the idea",
+      "We scope it together"
+    ]
+  }
 ]

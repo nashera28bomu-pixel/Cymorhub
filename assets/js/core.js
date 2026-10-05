@@ -25,7 +25,7 @@
       this.grow = this.o.grow; this.sat = this.o.sat;
       this.ox = 0; this.oy = 0; this.scale = 1; this.pulse = 0;
       this.yaw = 0; this.pitch = .28; this.px = 0; this.py = 0; this.tpx = 0; this.tpy = 0;
-      this.mx = -1e4; this.my = -1e4; this.hover = -1; this.onHover = null;
+      this.mx = -1e4; this.my = -1e4; this.hover = -1; this.onHover = null; this.beat = false;
       this.hits = []; this.lit = 0; this.litAt = 0;
       this.raf = 0; this.last = 0; this.t = 0; this.running = false;
       this.reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -75,7 +75,7 @@
       if(!this.reduced) this.t += dt;
       if(!this.reduced) this.yaw += dt * .12;
       this.px += (this.tpx - this.px) * .05; this.py += (this.tpy - this.py) * .05;
-      this.pulse *= .94;
+      this.pulse = this.beat ? .32 + .22 * Math.sin(this.t * 3.2) : this.pulse * .94;
       if(this.t - this.litAt > 2.2 && this.sats.length){ this.litAt = this.t; this.lit = (this.lit + 1 + Math.floor(Math.random()*2)) % this.sats.length; }
       this._draw();
       this.raf = requestAnimationFrame(this._loop);

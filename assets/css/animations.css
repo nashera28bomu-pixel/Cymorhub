@@ -23,19 +23,6 @@
   100%{opacity:0;}
 }
 
-/* Hero content fade-up once loader clears */
-@keyframes heroIn{
-  from{opacity:0;transform:translateY(18px);}
-  to{opacity:1;transform:translateY(0);}
-}
-.hero .orbit-stage,.hero-name,.hero-tagline,.hero-ctas,.hero-status{
-  animation:heroIn .8s var(--ease) both;
-}
-.hero-name{animation-delay:.08s;}
-.hero-tagline{animation-delay:.16s;}
-.hero-ctas{animation-delay:.24s;}
-.hero-status{animation-delay:.32s;}
-
 /* Scroll reveal, toggled via IntersectionObserver in animations.js */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s var(--ease), transform .6s var(--ease);}
 .reveal.in-view{opacity:1;transform:translateY(0);}

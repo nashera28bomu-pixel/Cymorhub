@@ -21,22 +21,22 @@ function applySocials(data){
 
   const icons = [];
   if(data.whatsapp && data.whatsapp[1]){
-    icons.push({ label: 'WhatsApp (alt)', href: toWhatsAppUrl(data.whatsapp[1], message), icon: '💬' });
+    icons.push({ label: 'WhatsApp (alt)', text: 'WhatsApp 2', href: toWhatsAppUrl(data.whatsapp[1], message) });
   }
   (data.instagram || []).forEach(handle => {
-    icons.push({ label: `Instagram @${handle}`, href: `https://instagram.com/${handle}`, icon: '📸' });
+    icons.push({ label: `Instagram @${handle}`, text: `Instagram · ${handle}`, href: `https://instagram.com/${handle}` });
   });
   if(data.telegram){
-    icons.push({ label: `Telegram @${data.telegram}`, href: `https://t.me/${data.telegram}`, icon: '✈️' });
+    icons.push({ label: `Telegram @${data.telegram}`, text: 'Telegram', href: `https://t.me/${data.telegram}` });
   }
   if(data.tiktok){
-    icons.push({ label: `TikTok @${data.tiktok}`, href: `https://tiktok.com/@${data.tiktok}`, icon: '🎵' });
+    icons.push({ label: `TikTok @${data.tiktok}`, text: 'TikTok', href: `https://tiktok.com/@${data.tiktok}` });
   }
 
   const socialRow = document.getElementById('social-row');
   if(socialRow){
     socialRow.innerHTML = icons.map(s =>
-      `<a href="${s.href}" target="_blank" rel="noopener" aria-label="${s.label}">${s.icon}</a>`
+      `<a href="${s.href}" target="_blank" rel="noopener" aria-label="${s.label}">${s.text}</a>`
     ).join('');
   }
 }

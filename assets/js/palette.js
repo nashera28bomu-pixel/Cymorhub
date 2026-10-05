@@ -7,12 +7,15 @@
 
   function build(){
     const base = [
-      {t:'Explore projects', h:'Section', run:go('#work')},
-      {t:'View the lab', h:'Section', run:go('#lab')},
       {t:'View services', h:'Section', run:go('#services')},
+      {t:'How I work', h:'Section', run:go('#process')},
       {t:'About Cymor', h:'Section', run:go('#about')},
+      {t:'Explore projects', h:'Section', run:go('#projects')},
+      {t:'View the project network', h:'Section', run:() => { const b = document.querySelector('[data-view="network"]'); if(b) b.click(); go('#projects')(); }},
+      {t:'View the lab', h:'Section', run:go('#lab')},
+      {t:'View the stack', h:'Section', run:go('#stack')},
+      {t:'Open system info', h:'Section', run:go('#system')},
       {t:'Contact', h:'Section', run:go('#contact')},
-      {t:'Open system telemetry', h:'Panel', run:() => window.CymorSystem && window.CymorSystem.open()},
       {t:'Chat on WhatsApp', h:'Link', run:() => window.open(window.CYMOR_WA_URL || '#', '_blank', 'noopener')}
     ];
     const proj = (window.CYMOR_PROJECTS || []).map(p => ({t:'Open ' + p.name, h:'Project', run:() => window.openProjectModal(p.id)}));
