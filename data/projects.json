@@ -1,7 +1,7 @@
 [
   {
     "id": "cymor-speed",
-    "name": "CymorSpeed",
+    "name": "CymorOnlineSpeedTest",
     "icon": "⚡",
     "shortDescription": "Test your internet speed instantly.",
     "description": "A clean, fast internet speed test tool — download, upload and ping, no clutter, no ads, built to load instantly even on a slow connection.",
@@ -14,7 +14,7 @@
     "category": "tools",
     "status": "Live",
     "version": "v1.0",
-    "url": "https://cymorspeed.onrender.com"
+    "url": "https://cymoronlinespeedtest.vercel.app"
   },
   {
     "id": "cymor-vcf",
