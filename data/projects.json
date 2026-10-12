@@ -239,6 +239,26 @@
     ]
   },
   {
+  "id": "cloudy",
+  "name": "Cloudy",
+  "icon": "☁️",
+  "shortDescription": "Private cloud document storage. Your files. Your space.",
+  "description": "Cloudy is a mobile-first cloud document storage platform where each user gets a private workspace to upload, organize, preview and download their documents. Files are kept in private storage and reached only through short-lived secure links, with per-user quotas enforced on the server. Built with React, TypeScript and Tailwind on the frontend, a Node/Express API, and Supabase for authentication, database and file storage.",
+  "features": [
+    "Secure sign-up, email verification and password reset",
+    "Private per-user storage with server-enforced quotas",
+    "Drag-and-drop uploads with progress, retry and cancel",
+    "Folders, search, sorting and file-type filters",
+    "In-browser preview for PDFs, images and text files",
+    "Short-lived secure download links",
+    "Installable PWA with dark and light themes"
+  ],
+  "category": "apps",
+  "status": "Live",
+  "version": "v1.0",
+  "url": "https://cloudy-rho.vercel.app"
+  },
+  {
     "id": "cymor-news-hub",
     "name": "Cymor News Hub",
     "icon": "📰",
