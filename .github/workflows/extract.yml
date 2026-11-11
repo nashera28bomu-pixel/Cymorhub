@@ -1,10 +1,10 @@
-name: Extract Cymorhub zip
+name: Extract zip
 
 on:
-  workflow_dispatch:
   push:
     paths:
-      - "Cymorhub-v3.zip"
+      - '*.zip'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -15,14 +15,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Extract zip into repo root
+      - name: Extract zip files in repo root
         run: |
-          set -e
-          test -f Cymorhub-v3.zip
-          mkdir /tmp/x
-          unzip -q Cymorhub-v3.zip -d /tmp/x
-          cp -a /tmp/x/Cymorhub-main/. .
-          rm Cymorhub-v3.zip
+          shopt -s nullglob
+          zips=(*.zip)
+          if [ ${#zips[@]} -eq 0 ]; then
+            echo "No zip found in repo root."
+            exit 0
+          fi
+          for z in "${zips[@]}"; do
+            rm -rf /tmp/extract && mkdir /tmp/extract
+            unzip -q "$z" -d /tmp/extract
+            # If everything sits inside one top-level folder, step into it
+            if [ "$(ls -A /tmp/extract | wc -l)" -eq 1 ] && [ -d "/tmp/extract/$(ls /tmp/extract)" ]; then
+              cp -a "/tmp/extract/$(ls /tmp/extract)/." .
+            else
+              cp -a /tmp/extract/. .
+            fi
+            git rm -q -f "$z"
+          done
 
       - name: Commit and push
         run: |
@@ -30,5 +41,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
           git diff --cached --quiet && echo "Nothing to commit" && exit 0
-          git commit -m "Extract Cymorhub v3"
+          git commit -m "Extract uploaded zip"
           git push
