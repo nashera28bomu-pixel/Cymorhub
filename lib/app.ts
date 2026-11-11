@@ -1,0 +1,6 @@
+export const APP_NAME = 'CymorFlix'
+export const APP_VERSION = '1.0.0'
+export const APP_BUILD = '2026.11'
+export const DEVELOPER = 'Legendary Smiley Cymor'
+export const COMPANY = 'Cymor Tech Services'
+export const LOCATION = 'Nairobi, Kenya'
