@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 const baseUrl = 'https://framex.wolvarex.com/api/v1'
+const siteUrl = process.env.SITE_URL || 'https://www.cymortechservices.my.id'
 
 export async function GET(request: NextRequest) {
   const key = process.env.FRAMEX_API_KEY
@@ -18,7 +19,12 @@ export async function GET(request: NextRequest) {
 
   try {
     const response = await fetch(`${baseUrl}${path}`, {
-      headers: { 'X-API-Key': key, Accept: 'application/json' },
+      headers: {
+        'X-API-Key': key,
+        Accept: 'application/json',
+        Origin: siteUrl,
+        Referer: `${siteUrl}/`,
+      },
       next: { revalidate: 60 },
       signal: AbortSignal.timeout(10000),
     })
