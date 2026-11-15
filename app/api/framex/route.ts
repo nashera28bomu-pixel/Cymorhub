@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const API_BASE = 'https://framex.wolvarex.com/api'
+// Paths below already start with /api/v1, so the base must NOT end in /api
+const API_BASE = 'https://framex.wolvarex.com'
 const slugPattern = /^[\w-]{1,120}$/
 
 function originCandidates(request: NextRequest): string[] {
   const origins: string[] = []
 
-  const add = (value: string | null | undefined, skipDeploymentHosts = false) => {
-    const raw = value?.trim()
+  const addOne = (value: string, skipDeploymentHosts: boolean) => {
+    const raw = value.trim()
     if (!raw) return
 
     try {
@@ -24,6 +25,8 @@ function originCandidates(request: NextRequest): string[] {
       const isVercelDeployment = hostname === 'vercel.app' || hostname.endsWith('.vercel.app')
       const isCymorHost = hostname === 'cymortechservices.my.id' || hostname.endsWith('.cymortechservices.my.id')
       if (isLocal || (skipDeploymentHosts && (isVercelDeployment || !isCymorHost))) return
+      // only accept real hostnames (no commas, spaces or stray characters)
+      if (!/^[a-z0-9.-]+$/.test(hostname)) return
 
       if (!origins.includes(parsed.origin) && origins.length < 5) origins.push(parsed.origin)
     } catch {
@@ -31,8 +34,14 @@ function originCandidates(request: NextRequest): string[] {
     }
   }
 
+  // A value may hold several entries separated by commas or spaces
+  const add = (value: string | null | undefined, skipDeploymentHosts = false) => {
+    if (!value) return
+    for (const part of value.split(/[\s,]+/)) addOne(part, skipDeploymentHosts)
+  }
+
   add(process.env.SITE_URL)
-  add(request.headers.get('x-forwarded-host')?.split(',')[0], true)
+  add(request.headers.get('x-forwarded-host'), true)
   add(request.headers.get('host'), true)
   add('https://www.cymortechservices.my.id')
   add('https://cymortechservices.my.id')
@@ -98,7 +107,8 @@ export async function GET(request: NextRequest) {
   const params = request.nextUrl.searchParams
   const type = params.get('type') || 'trending'
   const query = params.get('q')?.trim().slice(0, 120) || ''
-  const id = params.get('id')?.trim() || ''
+  // the app sends the slug as `id` (details) or `g` (genre rows); accept both
+  const id = (params.get('id') || params.get('g') || '').trim()
   const pageRaw = Number(params.get('page') || '1')
   const page = Number.isInteger(pageRaw) && pageRaw > 0 ? Math.min(pageRaw, 100) : 1
   const pageQuery = `?page=${page}`
