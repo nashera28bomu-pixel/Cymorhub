@@ -58,7 +58,14 @@ export async function GET(request: NextRequest) {
   try {
     const response = await fetchFramex(path)
     const payload = await response.json().catch(() => ({}))
-    if (!response.ok) return NextResponse.json({ error: 'FrameX catalog request failed' }, { status: response.status })
+    if (!response.ok) {
+      const error = response.status === 401
+        ? 'FrameX rejected the API key. Confirm FRAMEX_API_KEY is set for this deployment and that the key allows cymortechservices.my.id.'
+        : response.status === 403
+          ? 'FrameX denied this request. Confirm the key has catalog access and allows cymortechservices.my.id.'
+          : 'FrameX catalog request failed.'
+      return NextResponse.json({ error }, { status: response.status })
+    }
     return NextResponse.json(payload, { headers: { 'Cache-Control': 'private, max-age=60' } })
   } catch (error) {
     if (error instanceof FramexNotConfiguredError) {

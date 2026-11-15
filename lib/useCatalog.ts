@@ -12,14 +12,16 @@ export function useCatalog() {
   const [trending, setTrending] = useState<Movie[]>(samples)
   const [collections, setCollections] = useState<Record<string, Movie[]>>({})
   const [apiState, setApiState] = useState<ApiState>('connecting')
+  const [apiError, setApiError] = useState('')
   const alive = useRef(true)
 
   const load = useCallback(async () => {
     setApiState('connecting')
+    setApiError('')
     try {
       const list = await fetchTrending()
       if (!alive.current) return
-      if (!list.length) throw new Error('empty')
+      if (!list.length) throw new Error('FrameX returned no trending titles. Confirm catalog access is enabled for this key.')
       setTrending(list)
       setApiState('online')
       const results = await Promise.allSettled([
@@ -35,8 +37,9 @@ export function useCatalog() {
         if (r.status === 'fulfilled' && r.value.length) next[keys[i]] = r.value.slice(0, 20)
       })
       setCollections(next)
-    } catch {
+    } catch (error) {
       if (!alive.current) return
+      setApiError(error instanceof Error ? error.message : 'Unable to connect to FrameX.')
       setTrending(samples)
       setCollections({})
       setApiState('offline')
@@ -64,7 +67,7 @@ export function useCatalog() {
     [collections, apiState, trending],
   )
 
-  return { trending, rowFor, collections, apiState, reload: load }
+  return { trending, rowFor, collections, apiState, apiError, reload: load }
 }
 
 export function useSearch(query: string) {

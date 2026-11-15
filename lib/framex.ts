@@ -188,8 +188,14 @@ export function normalizeList(payload: unknown): Movie[] {
 
 async function call(params: Record<string, string>): Promise<unknown> {
   const res = await fetch(`/api/framex?${new URLSearchParams(params)}`, { cache: 'no-store' })
-  if (!res.ok) throw new Error(`FrameX ${res.status}`)
-  return res.json()
+  const payload = await res.json().catch(() => null)
+  if (!res.ok) {
+    const message = payload && typeof payload === 'object' && typeof (payload as Raw).error === 'string'
+      ? (payload as Raw).error
+      : `FrameX request failed (${res.status}).`
+    throw new Error(message)
+  }
+  return payload
 }
 
 export const fetchTrending = async () => normalizeList(await call({ type: 'trending' }))

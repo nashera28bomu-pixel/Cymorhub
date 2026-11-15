@@ -18,7 +18,7 @@ type Overlay = { type: 'detail' | 'player' | 'download'; movie: Movie }
 
 export function App() {
   const { ready, settings, downloads } = useStore()
-  const { trending, rowFor, collections, apiState, reload } = useCatalog()
+  const { trending, rowFor, collections, apiState, apiError, reload } = useCatalog()
   const [intro, setIntro] = useState<boolean | null>(null)
   const [tab, setTab] = useState<Tab>('home')
   const [stack, setStack] = useState<Overlay[]>([])
@@ -95,7 +95,7 @@ export function App() {
           <>
             <Hero movies={trending} autoRotate={settings.heroAutoRotate} onPlay={play} onInfo={openDetail} onDownload={download} />
             <div className="catalog">
-              {apiState === 'offline' && <div className="notice">Preview catalog · add your <code>FRAMEX_API_KEY</code> in Vercel to load the live library.</div>}
+              {apiState === 'offline' && <div className="notice"><strong>Preview catalog.</strong> Live FrameX data is unavailable. {apiError || 'Check the FrameX deployment settings and retry from Settings.'}</div>}
               <MovieRow title="Trending Now" movies={trending.slice(0, 20)} onOpen={openDetail} />
               <MovieRow title="Top 10 Today" movies={trending.slice(0, 10)} onOpen={openDetail} ranked />
               {collections.popular?.length ? <MovieRow title="Popular Movies" movies={collections.popular} onOpen={openDetail} /> : null}

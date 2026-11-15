@@ -18,13 +18,13 @@ Next.js 16 · React 19 · Tailwind 4. No extra dependencies were added.
 ## Deploy
 1. Push this folder to GitHub.
 2. Import the repo in Vercel (framework: Next.js, auto-detected).
-3. Project → Settings → Environment Variables: add `FRAMEX_API_KEY`, then redeploy. Set `SITE_URL` to your public origin only if you need to override Vercel's detected deployment host.
+3. Project → Settings → Environment Variables: add `FRAMEX_API_KEY` for **Production**, then redeploy. FrameX requests use `https://cymortechservices.my.id` as their `Origin` and `Referer`, even when the app is opened through Vercel's `www` redirect or a preview deployment.
 4. Project → Settings → Domains: add your domain and set the DNS records Vercel shows.
 
 Without the key the app runs in **preview mode** with sample titles.
 
 ## FrameX data
-The FrameX key is used only by Next.js API routes and is never sent to browser code. Catalog requests are made through `/api/framex`; playback and downloads use `/api/framex/play`; football feeds use `/api/framex/sports`.
+The FrameX key is used only by Next.js API routes and is never sent to browser code. Catalog requests are made through `/api/framex`; playback and downloads use `/api/framex/play`; football feeds use `/api/framex/sports`. The API origin defaults to `https://cymortechservices.my.id`, not Vercel's deployment-specific hostname; use `FRAMEX_SITE_ORIGIN` only if your FrameX key is registered for a different HTTPS origin.
 
 The app uses documented MovieBox catalog routes for trending, popular, latest, popular series, upcoming, search, and title detail. It uses the signed `/api/v1/stream-url` endpoint for playback and downloads. Signed links expire, so the player refreshes them rather than storing them as permanent URLs.
 
