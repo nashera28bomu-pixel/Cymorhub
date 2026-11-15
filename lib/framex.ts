@@ -193,7 +193,10 @@ async function call(params: Record<string, string>): Promise<unknown> {
     const message = payload && typeof payload === 'object' && typeof (payload as Raw).error === 'string'
       ? (payload as Raw).error
       : `FrameX request failed (${res.status}).`
-    throw new Error(message)
+    const details = payload && typeof payload === 'object' && typeof (payload as Raw).details === 'string'
+      ? (payload as Raw).details
+      : undefined
+    throw new Error(details ? `${message} ${details}` : message)
   }
   return payload
 }

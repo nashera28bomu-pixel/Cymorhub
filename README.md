@@ -24,7 +24,7 @@ Next.js 16 · React 19 · Tailwind 4. No extra dependencies were added.
 Without the key the app runs in **preview mode** with sample titles.
 
 ## FrameX data
-The FrameX key is used only by Next.js API routes and is never sent to browser code. Catalog requests are made through `/api/framex`; playback and downloads use `/api/framex/play`; football feeds use `/api/framex/sports`. The API origin defaults to `https://cymortechservices.my.id`, not Vercel's deployment-specific hostname; use `FRAMEX_SITE_ORIGIN` only if your FrameX key is registered for a different HTTPS origin.
+The FrameX key is used only by Next.js API routes and is never sent to browser code. Catalog requests are made through `/api/framex`; playback and downloads use `/api/framex/play`; football feeds use `/api/framex/sports`. The catalog route tries the configured `SITE_URL`, the incoming CymorFlix host (excluding local and Vercel preview hosts), then `www.cymortechservices.my.id` and `cymortechservices.my.id` when FrameX returns 401/403. Other FrameX routes use `https://cymortechservices.my.id` by default; set `FRAMEX_SITE_ORIGIN` only if your FrameX key is registered for another HTTPS origin.
 
 The app uses documented MovieBox catalog routes for trending, popular, latest, popular series, upcoming, search, and title detail. It uses the signed `/api/v1/stream-url` endpoint for playback and downloads. Signed links expire, so the player refreshes them rather than storing them as permanent URLs.
 
