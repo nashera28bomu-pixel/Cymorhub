@@ -125,6 +125,8 @@ code { background: #ffffff14; padding: 1px 6px; border-radius: 4px; font-size: .
   .app-shell { padding-bottom: calc(86px + env(safe-area-inset-bottom)); }
   .bottom-nav { position: fixed; display: flex; z-index: 60; bottom: 0; inset-inline: 0; justify-content: space-around; align-items: center; padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); border-top: 1px solid #ffffff14; background: rgba(10,11,14,.9); backdrop-filter: blur(18px); }
   .bottom-nav button { flex: 1; display: grid; place-items: center; gap: 3px; color: #8b8c94; font-size: 10.5px; font-weight: 600; padding: 4px 0; transition: color .2s; }
+  .bottom-nav .bottom-novel { flex: 1; display: grid; place-items: center; gap: 3px; color: #8b8c94; font-size: 10.5px; font-weight: 600; padding: 4px 0; text-decoration: none; transition: color .2s; }
+  .bottom-nav .bottom-novel:hover { color: #fff; }
   .bn-icon { position: relative; display: grid; place-items: center; width: 52px; height: 30px; border-radius: 16px; transition: .3s; }
   .bn-icon em { position: absolute; top: -4px; right: 2px; margin: 0; }
   .bottom-nav .bottom-active { color: #fff; }
@@ -164,6 +166,30 @@ code { background: #ffffff14; padding: 1px 6px; border-radius: 4px; font-size: .
 /* football 3D ball */
 .football { text-align: center; }
 .football .page-intro { margin-bottom: 8px; }
+.football-tabs { display: flex; justify-content: center; gap: 8px; margin: 24px 0 22px; }
+.football-tab { display: inline-flex; align-items: center; gap: 7px; padding: 10px 16px; border: 1px solid #ffffff1c; border-radius: 999px; color: #aeb0b8; background: #14151a; font-size: 13px; font-weight: 700; }
+.football-tab-on { background: #e5091422; color: #fff; border-color: #e5091477; }
+.football-tab .live-dot { width: 7px; height: 7px; margin: 0; }
+.football-loading { min-height: 180px; display: flex; align-items: center; justify-content: center; gap: 10px; color: #aeb0b8; }
+.football-message { max-width: 620px; margin: 28px auto; padding: 34px 22px; border: 1px solid #25262b; border-radius: 16px; background: linear-gradient(180deg, #14151a, #0f1013); text-align: center; }
+.football-message h2 { margin: 16px 0 8px; font-size: 19px; }
+.football-message p { margin: 0 auto 20px; max-width: 430px; color: #9a9ba2; line-height: 1.65; font-size: 13px; }
+.match-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; text-align: left; margin-top: 22px; }
+.match-card { display: grid; gap: 16px; min-width: 0; padding: 18px; border: 1px solid #ffffff14; border-radius: 14px; background: linear-gradient(145deg, #17181e, #0e0f12); box-shadow: 0 14px 34px -24px #000; }
+.match-card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #a2a3ab; font-size: 11px; }
+.match-card-top b { color: #a2a3ab; font-size: 10px; letter-spacing: 1px; }
+.match-card-top .match-live { color: #ff5b66; }
+.match-teams { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; }
+.match-teams strong { font-size: 14px; line-height: 1.35; }
+.match-teams strong:last-child { text-align: right; }
+.match-teams span { color: #fff; font-size: 16px; font-weight: 900; font-variant-numeric: tabular-nums; }
+.match-card time { color: #8f9097; font-size: 11px; }
+.match-watch { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; padding: 0 12px; border-radius: 8px; color: #fff; background: #e50914; font-size: 12px; font-weight: 800; }
+.match-watch-disabled { background: #ffffff0f; color: #777982; cursor: not-allowed; }
+@media (max-width: 500px) {
+  .football-tabs { gap: 6px; }
+  .football-tab { padding: 9px 11px; font-size: 12px; }
+}
 .ball-stage { position: relative; height: 230px; perspective: 800px; display: grid; place-items: center; margin-top: 10px; }
 .pitch { position: absolute; bottom: 20px; width: min(520px, 90%); height: 90px; border-radius: 50%; background: radial-gradient(ellipse, #0f3d22 0%, #0a1d12 60%, transparent 70%); transform: rotateX(70deg); box-shadow: 0 0 80px #19a35433; }
 .ball { position: relative; width: 112px; height: 112px; border-radius: 50%; background: radial-gradient(circle at 32% 28%, #fff 0%, #dcdde2 45%, #8e9099 100%); box-shadow: inset -12px -14px 26px #0007, 0 20px 40px -10px #000; animation: bounce 1.8s cubic-bezier(.3,0,.5,1) infinite; overflow: hidden; }
@@ -307,8 +333,9 @@ code { background: #ffffff14; padding: 1px 6px; border-radius: 4px; font-size: .
 .dl-opt-end { display: flex; align-items: center; gap: 10px; color: #fff; }
 .dl-opt-end b { font-size: 12px; color: #d9dae0; }
 .dl-note { color: #9a9ba2; font-size: 12.5px; line-height: 1.6; margin: 16px 2px 0; }
+.dl-error { color: #ff8a92; }
 .dl-center { text-align: center; display: grid; justify-items: center; }
-.dl-ring { position: relative; width: 190px; height: 190px; margin-bottom: 18px; }
+.dl-ring { position: relative; width: 190px; height: 190px; margin-bottom: 18px; display: grid; place-items: center; color: #ff5b66; }
 .dl-ring svg { transform: rotate(-90deg); filter: drop-shadow(0 0 18px #e5091488); }
 .dl-ring-track { fill: none; stroke: #ffffff1c; stroke-width: 6; }
 .dl-ring-fill { fill: none; stroke: url(#dlg); stroke-width: 6; stroke-linecap: round; }

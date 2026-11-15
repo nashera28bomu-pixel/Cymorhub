@@ -21,13 +21,18 @@ export function useDetail(movie: Movie) {
 
   useEffect(() => {
     let cancelled = false
+    if (movie.live) {
+      setFull(movie)
+      setLoading(false)
+      return
+    }
     if (cache.has(movie.id)) {
       setFull(merge(movie, cache.get(movie.id)!))
       setLoading(false)
       return
     }
     setLoading(true)
-    fetchDetail(movie.id)
+    fetchDetail(movie.id, movie.detailPath)
       .then((d) => {
         if (cancelled || !d) return
         cache.set(movie.id, d)

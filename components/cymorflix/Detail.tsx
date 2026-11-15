@@ -7,7 +7,7 @@ import { Art } from './Art'
 
 export function Detail({ movie: base, onClose, onPlay, onDownload }: { movie: Movie; onClose: () => void; onPlay: (m: Movie) => void; onDownload: (m: Movie) => void }) {
   const { movie, loading } = useDetail(base)
-  const playable = movie.sources.length > 0
+  const playable = movie.sources.length > 0 || !!movie.canResolve
   return (
     <div className="detail" role="dialog" aria-label={movie.title}>
       <div className="detail-sheet">
@@ -18,8 +18,8 @@ export function Detail({ movie: base, onClose, onPlay, onDownload }: { movie: Mo
           <div className="detail-cover-content">
             <h2>{movie.title}</h2>
             <div className="detail-actions">
-              <button className="primary-btn" onClick={() => onPlay(movie)}><Play size={17} fill="currentColor" /> Play</button>
-              <button className="glass-btn" onClick={() => onDownload(movie)}><Download size={17} /> Download</button>
+              <button className="primary-btn" onClick={() => onPlay(movie)} disabled={!playable}><Play size={17} fill="currentColor" /> Play</button>
+              <button className="glass-btn" onClick={() => onDownload(movie)} disabled={!playable}><Download size={17} /> Download</button>
             </div>
           </div>
         </div>
@@ -34,6 +34,7 @@ export function Detail({ movie: base, onClose, onPlay, onDownload }: { movie: Mo
           </div>
           {movie.genres.length > 0 && <div className="chips">{movie.genres.map((g) => <span key={g}>{g}</span>)}</div>}
           <p className="detail-overview">{movie.overview || `Discover ${movie.title} on CymorFlix.`}</p>
+          {!playable && movie.provider === 'showbox' && <p className="page-intro">This result is from the Showbox fallback. FrameX does not currently offer playback links for that source.</p>}
 
           {movie.cast.length > 0 && (
             <>

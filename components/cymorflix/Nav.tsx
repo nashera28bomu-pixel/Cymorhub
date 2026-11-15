@@ -1,6 +1,6 @@
 'use client'
 
-import { Download, Home, Search, Settings, Trophy } from 'lucide-react'
+import { BookOpen, Download, Home, Search, Settings, Trophy } from 'lucide-react'
 import { LogoMark, Wordmark } from './Logo'
 
 export type Tab = 'home' | 'football' | 'downloads' | 'settings' | 'search'
@@ -45,6 +45,10 @@ export function BottomNav({ tab, onTab, badge }: { tab: Tab; onTab: (t: Tab) => 
           <span>{label}</span>
         </button>
       ))}
+      <a className="bottom-novel" href="https://rumionnovelhub-brown.vercel.app" aria-label="Open Novel Hub">
+        <span className="bn-icon"><BookOpen size={21} /></span>
+        <span>Novel</span>
+      </a>
     </nav>
   )
 }

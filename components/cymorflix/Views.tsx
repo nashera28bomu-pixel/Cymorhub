@@ -1,8 +1,9 @@
 'use client'
 
-import { useRef, useState } from 'react'
-import { Check, ChevronRight, Download, Play, RefreshCw, Search as SearchIcon, Sparkles, Trash2, Trophy, X } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { Check, ChevronRight, Download, LoaderCircle, Play, RefreshCw, Search as SearchIcon, Sparkles, Trash2, Trophy, X } from 'lucide-react'
 import type { Movie } from '@/lib/framex'
+import { fetchSports, type FootballMatch } from '@/lib/sports'
 import { useSearch, type ApiState } from '@/lib/useCatalog'
 import { useStore, type Settings } from '@/lib/store'
 import { APP_BUILD, APP_NAME, APP_VERSION, COMPANY, DEVELOPER, LOCATION } from '@/lib/app'
@@ -34,23 +35,105 @@ export function SearchView({ onOpen }: { onOpen: (m: Movie) => void }) {
 }
 
 /* --------------------------------- Football --------------------------------- */
-export function FootballView({ onHome }: { onHome: () => void }) {
+function matchTime(value?: string) {
+  if (!value) return ''
+  const date = new Date(value)
+  return Number.isNaN(date.getTime()) ? value : date.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })
+}
+
+export function FootballView({ onHome, onPlay }: { onHome: () => void; onPlay: (m: Movie) => void }) {
+  const [view, setView] = useState<'ongoing' | 'matches' | 'replays'>('ongoing')
+  const [matches, setMatches] = useState<FootballMatch[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+  const [refreshKey, setRefreshKey] = useState(0)
+
+  useEffect(() => {
+    let cancelled = false
+    setLoading(true)
+    setError('')
+    fetchSports(view)
+      .then((items) => !cancelled && setMatches(items))
+      .catch((reason) => {
+        if (!cancelled) {
+          setMatches([])
+          setError(reason instanceof Error ? reason.message : 'Could not load football data.')
+        }
+      })
+      .finally(() => !cancelled && setLoading(false))
+    return () => { cancelled = true }
+  }, [view, refreshKey])
+
+  const playMatch = (match: FootballMatch) => {
+    if (!match.streamUrl) return
+    onPlay({
+      id: `football-${match.id}`,
+      contentId: match.id,
+      title: `${match.home} vs ${match.away}`,
+      overview: [match.competition, match.status, match.score].filter(Boolean).join(' · '),
+      genres: ['Football'],
+      cast: [],
+      sources: [{ url: match.streamUrl, kind: /\.m3u8(?:\?|$)/i.test(match.streamUrl) ? 'hls' : 'file', quality: 'Live', height: 0 }],
+      provider: 'sports',
+      canResolve: false,
+      live: true,
+      matchId: match.id,
+    })
+  }
+
   return (
     <section className="inner-page football">
       <span className="section-kicker">MATCHDAY</span>
       <h1>Football</h1>
-      <p className="page-intro">Fixtures, live scores and match streams.</p>
-      <div className="ball-stage" aria-hidden="true">
-        <div className="pitch" />
-        <div className="ball"><i /><i /><i /><i /><i /><i /></div>
-        <div className="ball-shadow" />
+      <p className="page-intro">Live matches, upcoming fixtures, and replays supplied by FrameX.</p>
+      <div className="football-tabs" role="tablist" aria-label="Football feeds">
+        {([
+          ['ongoing', 'Live now'],
+          ['matches', 'Fixtures'],
+          ['replays', 'Replays'],
+        ] as const).map(([key, label]) => (
+          <button key={key} role="tab" aria-selected={view === key} className={view === key ? 'football-tab football-tab-on' : 'football-tab'} onClick={() => setView(key)}>
+            {key === 'ongoing' ? <span className="live-dot" /> : null}{label}
+          </button>
+        ))}
       </div>
-      <div className="empty-state">
-        <div className="empty-icon"><Trophy size={26} /></div>
-        <h2>The pitch is being prepared</h2>
-        <p>Live matches and fixtures haven&apos;t been connected to CymorFlix yet. Meanwhile, there&apos;s a whole cinema waiting for you.</p>
-        <button className="glass-btn" onClick={onHome}>Explore movies</button>
-      </div>
+      {loading && <div className="football-loading"><LoaderCircle className="spin" size={22} /> Loading {view === 'ongoing' ? 'live matches' : view}…</div>}
+      {!loading && error && (
+        <div className="football-message">
+          <h2>Football feed unavailable</h2>
+          <p>{error}. Check that <code>FRAMEX_API_KEY</code> is configured on the deployed server.</p>
+          <button className="glass-btn" onClick={() => setRefreshKey((current) => current + 1)}>Try again</button>
+        </div>
+      )}
+      {!loading && !error && matches.length === 0 && (
+        <div className="football-message">
+          <div className="empty-icon"><Trophy size={26} /></div>
+          <h2>{view === 'ongoing' ? 'No live matches right now' : view === 'matches' ? 'No fixtures found' : 'No replays available'}</h2>
+          <p>FrameX returned no items for this feed. Try another tab or check again later.</p>
+          <button className="glass-btn" onClick={onHome}>Explore movies</button>
+        </div>
+      )}
+      {!loading && !error && matches.length > 0 && (
+        <div className="match-grid">
+          {matches.map((match) => (
+            <article className="match-card" key={`${view}-${match.id}`}>
+              <div className="match-card-top">
+                <span>{match.competition || 'Football'}</span>
+                <b className={view === 'ongoing' ? 'match-live' : ''}>{view === 'ongoing' ? 'LIVE' : match.status || (view === 'replays' ? 'Replay' : 'Scheduled')}</b>
+              </div>
+              <div className="match-teams">
+                <strong>{match.home}</strong>
+                <span>{match.score || '—'}</span>
+                <strong>{match.away}</strong>
+              </div>
+              {matchTime(match.startTime) ? <time>{matchTime(match.startTime)}</time> : null}
+              <button className={match.streamUrl ? 'match-watch' : 'match-watch match-watch-disabled'} disabled={!match.streamUrl} onClick={() => playMatch(match)}>
+                {match.streamUrl ? <><Play size={16} fill="currentColor" /> {view === 'replays' ? 'Play replay' : 'Watch live'}</> : 'Stream unavailable'}
+              </button>
+            </article>
+          ))}
+        </div>
+      )}
     </section>
   )
 }

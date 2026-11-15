@@ -18,7 +18,7 @@ type Overlay = { type: 'detail' | 'player' | 'download'; movie: Movie }
 
 export function App() {
   const { ready, settings, downloads } = useStore()
-  const { trending, rowFor, apiState, reload } = useCatalog()
+  const { trending, rowFor, collections, apiState, reload } = useCatalog()
   const [intro, setIntro] = useState<boolean | null>(null)
   const [tab, setTab] = useState<Tab>('home')
   const [stack, setStack] = useState<Overlay[]>([])
@@ -98,13 +98,17 @@ export function App() {
               {apiState === 'offline' && <div className="notice">Preview catalog · add your <code>FRAMEX_API_KEY</code> in Vercel to load the live library.</div>}
               <MovieRow title="Trending Now" movies={trending.slice(0, 20)} onOpen={openDetail} />
               <MovieRow title="Top 10 Today" movies={trending.slice(0, 10)} onOpen={openDetail} ranked />
+              {collections.popular?.length ? <MovieRow title="Popular Movies" movies={collections.popular} onOpen={openDetail} /> : null}
+              {collections.latest?.length ? <MovieRow title="New Releases" movies={collections.latest} onOpen={openDetail} /> : null}
+              {collections.series?.length ? <MovieRow title="Popular Series" movies={collections.series} onOpen={openDetail} /> : null}
+              {collections.upcoming?.length ? <MovieRow title="Coming Soon" movies={collections.upcoming} onOpen={openDetail} /> : null}
               {ROW_CATEGORIES.map((c) => <MovieRow key={c} title={c} movies={rowFor(c)} onOpen={openDetail} />)}
               <p className="legal">{APP_NAME} {APP_VERSION} · by {DEVELOPER}</p>
             </div>
           </>
         )}
         {tab === 'search' && <SearchView onOpen={openDetail} />}
-        {tab === 'football' && <FootballView onHome={() => goTab('home')} />}
+        {tab === 'football' && <FootballView onHome={() => goTab('home')} onPlay={(m) => play(m)} />}
         {tab === 'downloads' && <DownloadsView onHome={() => goTab('home')} onPlayId={playId} />}
         {tab === 'settings' && <SettingsView apiState={apiState} onReload={reload} onReplayIntro={() => setIntro(true)} />}
 

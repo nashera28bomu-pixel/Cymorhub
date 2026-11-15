@@ -54,13 +54,20 @@ export function Player({ movie: base, onClose }: { movie: Movie; onClose: () => 
   const video = useRef<HTMLVideoElement>(null)
   const hls = useRef<any>(null)
   const hideTimer = useRef<number | undefined>(undefined)
+  const refreshTimer = useRef<number | undefined>(undefined)
+  const refreshRef = useRef<(() => void) | null>(null)
+  const refreshAttempted = useRef(false)
   const tapTimer = useRef<number | undefined>(undefined)
   const lastTap = useRef(0)
   const seekTo = useRef<number | null>(null)
   const started = useRef(false)
 
   const [picked, setPicked] = useState<string | null>(null)
+  const [pickedResolution, setPickedResolution] = useState<string | null>(null)
   const current = useMemo(() => sources.find((s) => s.url === picked) ?? defaultSource(sources, settings.playbackQuality), [sources, picked, settings.playbackQuality])
+  const canResolve = !!movie.canResolve && !movie.live
+  const liveMatch = !!movie.live && !!movie.matchId
+  const resolution = pickedResolution || (current?.height ? String(current.height) : settings.playbackQuality)
 
   const [playing, setPlaying] = useState(false)
   const [buffering, setBuffering] = useState(true)
@@ -99,49 +106,95 @@ export function Player({ movie: base, onClose }: { movie: Movie; onClose: () => 
   /* ---------- attach source ---------- */
   useEffect(() => {
     const el = video.current
-    if (!el || !current) return
+    if (!el || (!current && !canResolve && !liveMatch)) return
     let cancelled = false
     setError('')
     setBuffering(true)
     if (started.current && el.currentTime > 0) seekTo.current = el.currentTime
-    else if (settings.resume) seekTo.current = getResume(movie.id) || null
+    else if (settings.resume && !movie.live) seekTo.current = getResume(movie.id) || null
+    refreshAttempted.current = false
 
-    hls.current?.destroy?.()
-    hls.current = null
+    const attach = async (url: string, autoplay: boolean) => {
+      if (cancelled) return
+      hls.current?.destroy?.()
+      hls.current = null
+      const isHls = /\.m3u8(?:\?|$)/i.test(url) || current?.kind === 'hls'
+      const begin = () => {
+        if (autoplay) el.play().catch(() => setPlaying(false))
+      }
 
-    const begin = () => el.play().catch(() => setPlaying(false))
-
-    if (current.kind === 'hls') {
-      if (el.canPlayType('application/vnd.apple.mpegurl')) {
-        el.src = current.url
+      if (isHls && !el.canPlayType('application/vnd.apple.mpegurl')) {
+        const Hls = await loadHls()
+        if (cancelled) return
+        if (!Hls?.isSupported?.()) throw new Error('This browser cannot play this stream.')
+        const h = new Hls({ enableWorker: true, lowLatencyMode: false })
+        hls.current = h
+        h.on(Hls.Events.ERROR, (_: unknown, data: any) => {
+          if (data?.fatal) setError('Playback error. Try another quality or check your connection.')
+        })
+        h.loadSource(url)
+        h.attachMedia(el)
         begin()
       } else {
-        loadHls()
-          .then((Hls) => {
-            if (cancelled) return
-            if (!Hls?.isSupported?.()) return setError('This browser cannot play this stream.')
-            const h = new Hls({ enableWorker: true, lowLatencyMode: false })
-            hls.current = h
-            h.on(Hls.Events.ERROR, (_: unknown, data: any) => {
-              if (data?.fatal) setError('Playback error. Try another quality or check your connection.')
-            })
-            h.loadSource(current.url)
-            h.attachMedia(el)
-            begin()
-          })
-          .catch(() => !cancelled && setError('Could not load the video engine. Check your connection.'))
+        el.src = url
+        begin()
       }
-    } else {
-      el.src = current.url
-      begin()
     }
+
+    const resolveAndAttach = async (preserve = false) => {
+      const el = video.current
+      if (!el) return
+      const position = preserve ? el.currentTime : seekTo.current
+      const autoplay = preserve ? !el.paused : true
+      let url = current?.url
+      let expiresIn = 0
+
+      if (canResolve) {
+        const params = new URLSearchParams({ subjectId: movie.contentId || movie.id, mode: 'stream', resolution })
+        if (movie.season) params.set('season', movie.season)
+        if (movie.episode) params.set('episode', movie.episode)
+        const response = await fetch(`/api/framex/play?${params}`, { cache: 'no-store' })
+        const payload = await response.json().catch(() => ({}))
+        if (!response.ok || typeof payload.url !== 'string') throw new Error(payload.error || 'FrameX could not start this title.')
+        url = payload.url
+        expiresIn = Number(payload.expiresIn) || 600
+      } else if (liveMatch) {
+        const params = new URLSearchParams({ view: 'stream', matchId: movie.matchId! })
+        const response = await fetch(`/api/framex/sports?${params}`, { cache: 'no-store' })
+        const payload = await response.json().catch(() => ({}))
+        if (response.ok && typeof payload.url === 'string') {
+          url = payload.url
+          expiresIn = Number(payload.expiresIn) || 600
+        }
+      }
+
+      if (!url) throw new Error('No playable stream was returned for this title.')
+      if (position !== null && position !== undefined) seekTo.current = position
+      await attach(url, autoplay)
+      if (expiresIn > 0) {
+        window.clearTimeout(refreshTimer.current)
+        const refreshIn = Math.max(30, expiresIn - 90) * 1000
+        refreshTimer.current = window.setTimeout(() => {
+          resolveAndAttach(true).catch(() => setError('The stream expired. Close the player and try again.'))
+        }, refreshIn)
+      }
+    }
+
+    refreshRef.current = () => {
+      resolveAndAttach(true).catch(() => setError('Could not refresh this stream. Check your connection and try again.'))
+    }
+    resolveAndAttach().catch((reason) => {
+      if (!cancelled) setError(reason instanceof Error ? reason.message : 'Could not load this stream.')
+    })
     return () => {
       cancelled = true
+      window.clearTimeout(refreshTimer.current)
+      refreshRef.current = null
       hls.current?.destroy?.()
       hls.current = null
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [current?.url])
+  }, [current?.url, current?.height, canResolve, liveMatch, movie.id, movie.contentId, movie.matchId, resolution])
 
   /* ---------- persist position ---------- */
   useEffect(() => {
@@ -240,7 +293,7 @@ export function Player({ movie: base, onClose }: { movie: Movie; onClose: () => 
 
   const pct = duration ? (time / duration) * 100 : 0
   const bufPct = duration ? (buffered / duration) * 100 : 0
-  const hasSources = sources.length > 0
+  const hasSources = sources.length > 0 || canResolve
 
   return (
     <div
@@ -274,7 +327,12 @@ export function Player({ movie: base, onClose }: { movie: Movie; onClose: () => 
         onPlaying={() => setBuffering(false)}
         onWaiting={() => setBuffering(true)}
         onCanPlay={() => setBuffering(false)}
-        onError={() => setError('This file could not be played. Try another quality.')}
+        onError={() => {
+          if ((canResolve || liveMatch) && !refreshAttempted.current) {
+            refreshAttempted.current = true
+            refreshRef.current?.()
+          } else setError('This file could not be played. Try another quality.')
+        }}
         onVolumeChange={(e) => {
           setVolume(e.currentTarget.volume)
           setMuted(e.currentTarget.muted)
@@ -371,14 +429,19 @@ export function Player({ movie: base, onClose }: { movie: Movie; onClose: () => 
             <span className="controls-title">{movie.title}</span>
             <div className="menu-wrap">
               <button className={menu ? 'player-btn player-btn-on' : 'player-btn'} onClick={() => setMenu((v) => !v)} aria-label="Quality and speed" aria-expanded={menu}>
-                <Settings size={22} />{current ? <i>{current.quality}</i> : null}
+                <Settings size={22} />{current ? <i>{current.quality}</i> : canResolve ? <i>{resolution === 'auto' ? 'Auto' : `${resolution}p`}</i> : null}
               </button>
               {menu && (
                 <div className="player-menu" onClick={(e) => e.stopPropagation()}>
                   <h4>Quality</h4>
                   {sources.map((s) => (
-                    <button key={s.url} className={s.url === current?.url ? 'menu-item menu-on' : 'menu-item'} onClick={() => { setPicked(s.url); setMenu(false) }}>
+                    <button key={s.url} className={s.url === current?.url ? 'menu-item menu-on' : 'menu-item'} onClick={() => { setPicked(s.url); setPickedResolution(s.height ? String(s.height) : null); setMenu(false) }}>
                       <span>{s.quality}{s.kind === 'hls' ? ' · Stream' : ''}</span>{s.url === current?.url ? <Check size={16} /> : null}
+                    </button>
+                  ))}
+                  {canResolve && sources.length === 0 && ['auto', '1080', '720', '480'].map((quality) => (
+                    <button key={quality} className={resolution === quality ? 'menu-item menu-on' : 'menu-item'} onClick={() => { setPickedResolution(quality); setMenu(false) }}>
+                      <span>{quality === 'auto' ? 'Best available' : `${quality}p`}</span>{resolution === quality ? <Check size={16} /> : null}
                     </button>
                   ))}
                   <h4><Gauge size={13} /> Speed</h4>

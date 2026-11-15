@@ -18,6 +18,14 @@ export type CastMember = { name: string; character?: string }
 export type Movie = {
   id: string
   title: string
+  contentId?: string
+  detailPath?: string
+  provider?: string
+  canResolve?: boolean
+  live?: boolean
+  matchId?: string
+  season?: string
+  episode?: string
   year?: string
   genres: string[]
   poster?: string
@@ -120,8 +128,12 @@ export function normalizeMovie(raw: Raw): Movie | null {
   if (!raw || typeof raw !== 'object') return null
   const src: Raw = raw.data && typeof raw.data === 'object' && !Array.isArray(raw.data) ? { ...raw, ...raw.data } : raw
   const title = pick(src, ['title', 'name', 'original_title'])
-  const id = pick(src, ['id', '_id', 'slug', 'tmdb_id', 'tmdbId', 'imdb_id', 'imdbId'])
+  const contentId = pick(src, ['contentId', 'content_id', 'subjectId', 'subject_id'])
+  const id = pick(src, ['id', '_id', 'slug', 'contentId', 'content_id', 'tmdb_id', 'tmdbId', 'imdb_id', 'imdbId'])
   if (!title || id === undefined) return null
+  const provider = pick(src, ['source', 'provider'])
+  const providerName = typeof provider === 'string' ? provider.toLowerCase() : undefined
+  const playableByApi = !!(contentId ?? id) && (!providerName || providerName === 'moviebox')
 
   const genresRaw = pick(src, ['genres', 'genre', 'categories', 'category'])
   const genres: string[] = Array.isArray(genresRaw)
@@ -150,6 +162,12 @@ export function normalizeMovie(raw: Raw): Movie | null {
   return {
     id: String(id),
     title: String(title),
+    contentId: contentId !== undefined ? String(contentId) : String(id),
+    detailPath: pick(src, ['detailPath', 'detail_path', 'path']) ? String(pick(src, ['detailPath', 'detail_path', 'path'])) : undefined,
+    provider: providerName,
+    canResolve: playableByApi,
+    season: pick(src, ['season', 'seasonNumber', 'season_number']) !== undefined ? String(pick(src, ['season', 'seasonNumber', 'season_number'])) : undefined,
+    episode: pick(src, ['episode', 'episodeNumber', 'episode_number']) !== undefined ? String(pick(src, ['episode', 'episodeNumber', 'episode_number'])) : undefined,
     year: yearRaw ? String(yearRaw).slice(0, 4) : undefined,
     genres,
     poster: poster || backdrop,
@@ -175,7 +193,11 @@ async function call(params: Record<string, string>): Promise<unknown> {
 }
 
 export const fetchTrending = async () => normalizeList(await call({ type: 'trending' }))
+export const fetchPopular = async () => normalizeList(await call({ type: 'popular' }))
+export const fetchLatest = async () => normalizeList(await call({ type: 'latest' }))
+export const fetchPopularSeries = async () => normalizeList(await call({ type: 'series' }))
+export const fetchUpcoming = async () => normalizeList(await call({ type: 'upcoming' }))
 export const searchMovies = async (q: string) => normalizeList(await call({ type: 'search', q }))
-export async function fetchDetail(id: string): Promise<Movie | null> {
-  return normalizeMovie((await call({ type: 'detail', id })) as Raw)
+export async function fetchDetail(id: string, detailPath?: string): Promise<Movie | null> {
+  return normalizeMovie((await call({ type: 'detail', id: detailPath || id })) as Raw)
 }
